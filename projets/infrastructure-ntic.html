@@ -4,13 +4,82 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Infrastructure NTIC CENTER CORPORATION — Ranguebaye Nantara</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="../assets/css/style.css"/>
+  <style>
+    .toc { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; margin-bottom: 50px; }
+    .toc-title { font-size: 12px; font-weight: 700; color: var(--imie-light); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+    .toc ol { padding-left: 20px; display: flex; flex-direction: column; gap: 5px; }
+    .toc li { font-size: 14px; color: var(--muted); }
+    .toc a { color: var(--muted); transition: color .2s; }
+    .toc a:hover { color: var(--imie-light); }
+    .toc ol ol { margin-top: 4px; padding-left: 16px; }
+    .toc ol ol li { font-size: 13px; }
+
+    .cs { margin-bottom: 60px; scroll-margin-top: 85px; }
+    .cs h2 { font-size: 21px; font-weight: 700; color: var(--white); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--imie-blue); display: flex; align-items: center; gap: 10px; }
+    .cs h3 { font-size: 16px; font-weight: 600; color: var(--imie-light); margin: 24px 0 12px; display: flex; align-items: center; gap: 8px; }
+    .cs p { font-size: 15px; color: var(--muted); line-height: 1.85; margin-bottom: 14px; }
+    .cs ul, .cs ol { padding-left: 0; display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .cs li { font-size: 15px; color: var(--muted); padding: 4px 0 4px 22px; position: relative; line-height: 1.6; }
+    .cs li::before { content: "–"; position: absolute; left: 0; color: var(--imie-blue); font-weight: 700; }
+
+    .code-block { margin: 20px 0; border-radius: 10px; overflow: hidden; border: 1px solid rgba(74,154,232,0.25); }
+    .code-header { background: rgba(11,110,196,0.18); padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(74,154,232,0.2); }
+    .code-label { font-size: 12px; font-weight: 600; color: var(--imie-light); font-family: 'JetBrains Mono', monospace; }
+    .code-os { font-size: 11px; color: var(--muted); }
+    pre { background: #080A14; padding: 20px; margin: 0; overflow-x: auto; }
+    pre code { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #C8D8F0; line-height: 1.7; white-space: pre; }
+    .cm { color: #5A7A9A; }
+    .hl { color: #4AE8A0; }
+    .wn { color: #FFD95A; }
+
+    .screenshot-zone { background: rgba(26,30,53,0.6); border: 2px dashed rgba(74,154,232,0.35); border-radius: 10px; padding: 28px 24px; text-align: center; margin: 18px 0; }
+    .screenshot-zone:hover { border-color: var(--imie-blue); }
+    .ss-icon { font-size: 26px; margin-bottom: 8px; opacity: 0.5; }
+    .ss-label { font-size: 13px; font-weight: 600; color: var(--imie-light); margin-bottom: 4px; }
+    .ss-desc { font-size: 12px; color: var(--muted); }
+
+    .data-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    .data-table th { background: rgba(11,110,196,0.2); color: var(--imie-light); font-weight: 600; padding: 10px 14px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--imie-blue); }
+    .data-table td { padding: 10px 14px; color: var(--muted); border-bottom: 1px solid rgba(74,154,232,0.1); vertical-align: top; line-height: 1.5; }
+    .data-table tr:hover td { background: rgba(74,154,232,0.04); }
+    .data-table code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: rgba(11,110,196,0.15); padding: 2px 6px; border-radius: 4px; color: var(--imie-light); }
+    .tdb { font-weight: 600; color: var(--white); }
+
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .bg { background: rgba(197,240,164,0.15); border: 1px solid rgba(197,240,164,0.4); color: #C5F0A4; }
+    .bb { background: rgba(11,110,196,0.15); border: 1px solid rgba(11,110,196,0.4); color: var(--imie-light); }
+    .by { background: rgba(255,217,90,0.15); border: 1px solid rgba(255,217,90,0.4); color: #FFD95A; }
+    .br { background: rgba(255,100,100,0.15); border: 1px solid rgba(255,100,100,0.4); color: #FF8080; }
+
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 14px; margin: 20px 0; }
+    .kpi-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; }
+    .kpi-v { font-size: 26px; font-weight: 800; background: linear-gradient(135deg, var(--imie-light), var(--imie-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .kpi-l { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    .alert { border-radius: 8px; padding: 14px 18px; margin: 16px 0; display: flex; gap: 12px; align-items: flex-start; font-size: 14px; }
+    .al-info { background: rgba(11,110,196,0.1); border: 1px solid rgba(11,110,196,0.3); color: #A8D8F8; }
+    .al-warn { background: rgba(255,217,90,0.1); border: 1px solid rgba(255,217,90,0.3); color: #FFD95A; }
+    .al-ok { background: rgba(197,240,164,0.1); border: 1px solid rgba(197,240,164,0.3); color: #C5F0A4; }
+    .al-icon { font-size: 15px; margin-top: 1px; flex-shrink: 0; }
+
+    .step-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--imie-blue), var(--imie-purple)); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .step-title { font-size: 18px; font-weight: 700; color: var(--white); }
+    .step-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    .vc { display: inline-block; padding: 2px 9px; border-radius: 5px; font-size: 11px; font-weight: 600; font-family: 'JetBrains Mono', monospace; margin: 2px; }
+    .v10 { background: rgba(255,80,80,0.15); color: #FF9090; border: 1px solid rgba(255,80,80,0.3); }
+    .v20 { background: rgba(80,120,255,0.15); color: #90AEFF; border: 1px solid rgba(80,120,255,0.3); }
+    .v30 { background: rgba(255,160,80,0.15); color: #FFBC90; border: 1px solid rgba(255,160,80,0.3); }
+    .v40 { background: rgba(80,200,120,0.15); color: #90E8B0; border: 1px solid rgba(80,200,120,0.3); }
+    .v70 { background: rgba(160,80,255,0.15); color: #CCA8FF; border: 1px solid rgba(160,80,255,0.3); }
+  </style>
 </head>
 <body>
 
-<!-- ══ NAV ══════════════════════════════════════ -->
 <nav class="nav">
   <div class="container">
     <a href="../index.html" class="nav-logo">RN · Portfolio</a>
@@ -32,89 +101,712 @@
   </div>
 </nav>
 
-<!-- ══ HERO PROJET ═══════════════════════════════ -->
 <section class="project-hero">
   <div class="container">
-    <a href="../index.html#projets" class="project-back fade-in">
-      <i class="fa-solid fa-arrow-left"></i> Retour aux projets
-    </a>
+    <a href="../index.html#projets" class="project-back fade-in"><i class="fa-solid fa-arrow-left"></i> Retour aux projets</a>
     <div class="fade-in">
       <div style="font-size:48px;margin-bottom:16px;">🏗️</div>
-      <h1>Infrastructure NTIC CENTER CORPORATION</h1>
-      <p style="font-size:18px;color:var(--muted);margin-bottom:20px;">Déploiement complet d'une infrastructure IT d'entreprise</p>
+      <h1>Déploiement Infrastructure SI<br><span class="gradient-text">NTIC CENTER CORPORATION</span></h1>
+      <p style="font-size:17px;color:var(--muted);margin-bottom:20px;max-width:700px;">Conception et déploiement complet du système d'information d'une ESN de 15 collaborateurs, de zéro à la mise en production — PEP Mission 1, RNCP39781.</p>
       <div class="project-hero-meta">
-        <span class="meta-item"><i class="fa-solid fa-calendar"></i> Mars 2026 – En cours</span>
+        <span class="meta-item"><i class="fa-solid fa-calendar"></i> Janvier – Avril 2026 (7 semaines)</span>
         <span class="meta-item"><i class="fa-solid fa-location-dot"></i> Saint-Denis, 93</span>
-        <span class="status-badge status-done">Réalisé</span>
+        <span class="meta-item"><i class="fa-solid fa-graduation-cap"></i> PEP Mission 1 — ERIS RNCP39781</span>
+        <span class="status-badge status-done">✓ Réalisé et validé</span>
       </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
-        <span class="tag-purple">Windows Server 2019</span><span class="tag-purple">Linux Debian</span><span class="tag-purple">Hyper-V</span><span class="tag-purple">Active Directory</span><span class="tag-purple">pfSense</span><span class="tag-purple">Zabbix</span><span class="tag-purple">Wazuh SIEM</span><span class="tag-purple">VPN</span>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:20px;">
+        <span class="tag-purple">VMware Workstation Pro</span><span class="tag-purple">pfSense 2.7 CE</span>
+        <span class="tag-purple">Windows Server 2022</span><span class="tag-purple">Ubuntu 22.04 LTS</span>
+        <span class="tag-purple">Active Directory</span><span class="tag-purple">OpenVPN AES-256-GCM</span>
+        <span class="tag-purple">Zabbix 6.4</span><span class="tag-purple">Wazuh 4.7 SIEM</span>
+        <span class="tag-purple">Nginx TLS</span><span class="tag-purple">ANSSI</span><span class="tag-purple">RGPD</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ CONTENU ═══════════════════════════════════ -->
-<section class="project-content">
+<div style="background:var(--bg2);padding:40px 0;">
   <div class="container">
-
-    <!-- Contexte -->
-    <div class="content-section fade-in">
-      <h2><i class="fa-solid fa-circle-info" style="color:var(--imie-blue);margin-right:10px;"></i>Contexte</h2>
-      <p>Dans le cadre de mon alternance chez NTIC CENTER CORPORATION, j'ai été chargé de déployer l'infrastructure informatique complète de l'entreprise, de zéro à la mise en production.</p>
+    <div class="kpi-grid">
+      <div class="kpi-card fade-in"><div class="kpi-v">10</div><div class="kpi-l">VMs déployées</div></div>
+      <div class="kpi-card fade-in"><div class="kpi-v">5</div><div class="kpi-l">VLANs sécurisés</div></div>
+      <div class="kpi-card fade-in"><div class="kpi-v">15</div><div class="kpi-l">Comptes AD actifs</div></div>
+      <div class="kpi-card fade-in"><div class="kpi-v">7/7</div><div class="kpi-l">Agents Zabbix actifs</div></div>
+      <div class="kpi-card fade-in"><div class="kpi-v">7/7</div><div class="kpi-l">Agents Wazuh actifs</div></div>
+      <div class="kpi-card fade-in"><div class="kpi-v">&lt;5 min</div><div class="kpi-l">MTTD incidents</div></div>
+      <div class="kpi-card fade-in"><div class="kpi-v">38 min</div><div class="kpi-l">RTO mesuré (obj. 2h)</div></div>
     </div>
-
-    <!-- Informations clés -->
-    <div class="content-section fade-in">
-      <h2><i class="fa-solid fa-table" style="color:var(--imie-blue);margin-right:10px;"></i>Informations clés</h2>
-      <div class="info-grid">
-        <div class="info-card"><div class="info-label">Période</div><div class="info-value">Mars 2026 – En cours</div></div>
-        <div class="info-card"><div class="info-label">Lieu</div><div class="info-value">Saint-Denis, 93</div></div>
-        <div class="info-card"><div class="info-label">Statut</div><div class="info-value">Réalisé</div></div>
-        <div class="info-card"><div class="info-label">Technologies</div><div class="info-value">8 outils</div></div>
-      </div>
-    </div>
-
-    <!-- Objectifs -->
-    <div class="content-section fade-in">
-      <h2><i class="fa-solid fa-bullseye" style="color:var(--imie-blue);margin-right:10px;"></i>Objectifs</h2>
-      <ul><li>Déployer une infrastructure virtualisée stable et sécurisée</li><li>Mettre en place les services réseau essentiels (AD, DNS, DHCP)</li><li>Sécuriser le système d'information selon les recommandations ANSSI</li><li>Mettre en place une supervision complète du SI</li></ul>
-    </div>
-
-    <!-- Réalisations -->
-    <div class="content-section fade-in">
-      <h2><i class="fa-solid fa-check-circle" style="color:var(--imie-blue);margin-right:10px;"></i>Réalisations</h2>
-      <ul><li>Déploiement de serveurs Windows Server 2019 et Linux Debian sous Hyper-V</li><li>Configuration d'Active Directory avec OU, GPO et gestion des droits</li><li>Mise en place DNS, DHCP et plan d'adressage IP structuré</li><li>Sécurisation avec pfSense, VPN site-à-site et bonnes pratiques ANSSI</li><li>Conformité RGPD : audit des accès et documentation</li><li>Supervision avec Zabbix (monitoring) et Wazuh SIEM (analyse des logs)</li><li>Production de livrables : schémas réseau, documentation technique, cahier des charges</li></ul>
-    </div>
-
-    <!-- Documentation -->
-    <div class="content-section fade-in">
-      <h2><i class="fa-brands fa-github" style="color:var(--imie-blue);margin-right:10px;"></i>Documentation & Code</h2>
-      <div class="coming-soon-box">
-        <div style="font-size:40px;">🚧</div>
-        <p>Le dépôt GitHub de ce projet sera disponible prochainement.<br>La documentation technique complète (schémas, procédures, rapport) sera publiée ici.</p>
-        <a href="#" class="btn btn-primary btn-sm" style="margin-top:20px;display:inline-flex;" style="opacity:0.5;pointer-events:none;">
-          <i class="fa-brands fa-github"></i> Voir sur GitHub
-        </a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ══ NAVIGATION PROJETS ════════════════════════ -->
-<div class="bg-alt" style="padding:40px 0;">
-  <div class="container" style="text-align:center;">
-    <p style="color:var(--muted);margin-bottom:20px;">Découvrir d'autres projets</p>
-    <a href="../index.html#projets" class="btn btn-secondary"><i class="fa-solid fa-grid-2"></i> Voir tous les projets</a>
   </div>
 </div>
 
-<!-- ══ FOOTER ════════════════════════════════════ -->
-<footer>
-  <p>Ranguebaye Nantara &nbsp;·&nbsp; Administrateur Systèmes, Réseaux & Sécurité &nbsp;·&nbsp; <span id="year"></span></p>
-</footer>
+<section style="padding:70px 0;">
+  <div class="container">
 
+    <div class="toc fade-in">
+      <div class="toc-title"><i class="fa-solid fa-list"></i>&nbsp; Table des matières</div>
+      <ol>
+        <li><a href="#contexte">Contexte et problématique</a></li>
+        <li><a href="#architecture">Architecture technique</a>
+          <ol>
+            <li><a href="#arch-vms">Inventaire des VMs</a></li>
+            <li><a href="#arch-vlan">Plan d'adressage et VLANs</a></li>
+            <li><a href="#arch-secu">Modèle de sécurité ANSSI</a></li>
+          </ol>
+        </li>
+        <li><a href="#p1">Étape 1 — pfSense &amp; Segmentation VLAN</a></li>
+        <li><a href="#p2">Étape 2 — Active Directory ncc.local</a></li>
+        <li><a href="#p3">Étape 3 — Services Linux &amp; ERP</a></li>
+        <li><a href="#p4">Étape 4 — Supervision Zabbix &amp; SIEM Wazuh</a></li>
+        <li><a href="#p5">Étape 5 — VPN OpenVPN &amp; PKI</a></li>
+        <li><a href="#p6">Étape 6 — Politique de sauvegarde 3-2-1</a></li>
+        <li><a href="#resultats">Résultats &amp; KPI</a></li>
+        <li><a href="#perspectives">Risques identifiés &amp; Perspectives Mission 2</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. CONTEXTE -->
+    <div class="cs fade-in" id="contexte">
+      <h2><i class="fa-solid fa-circle-info" style="color:var(--imie-blue)"></i> Contexte et problématique</h2>
+      <p>NTIC CENTER CORPORATION (NCC) est une ESN de 15 collaborateurs établie au 52 rue Charles Michels, 93200 Saint-Denis, spécialisée en cybersécurité, cloud computing, infogérance et formation IT.</p>
+      <p>Au lancement de la mission, NCC ne disposait d'<strong style="color:var(--white)">aucune infrastructure réseau structurée</strong> : équipements dispersés, accès non centralisés, aucun système de supervision ni de journalisation. Face à l'accueil croissant de stagiaires et à l'expansion de ses activités, la direction a mandaté le déploiement complet d'un SI sécurisé et pédagogique.</p>
+      <div class="alert al-warn">
+        <span class="al-icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+        <strong>Problématique :</strong>&nbsp;Comment concevoir et déployer une infrastructure réseau sécurisée, scalable et pédagogique, adaptée aux contraintes d'une PME du secteur numérique ?
+      </div>
+      <h3><i class="fa-solid fa-bullseye"></i> Trois besoins fondamentaux</h3>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Besoin</th><th>Solution retenue</th><th>Statut</th></tr></thead>
+        <tbody>
+          <tr><td class="tdb">1</td><td>Authentification centralisée</td><td>Active Directory ncc.local (DC01 + DC02 HA, Kerberos)</td><td><span class="badge bg">✓ Déployé</span></td></tr>
+          <tr><td class="tdb">2</td><td>VPN sécurisé accès distant</td><td>OpenVPN AES-256-GCM, PKI NCC-VPN-CA</td><td><span class="badge bg">✓ Déployé</span></td></tr>
+          <tr><td class="tdb">3</td><td>Journalisation &amp; conformité RGPD</td><td>SIEM Wazuh 4.7 — 7 agents, IDS, FIM</td><td><span class="badge bg">✓ Déployé</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 2. ARCHITECTURE -->
+    <div class="cs fade-in" id="architecture">
+      <h2><i class="fa-solid fa-network-wired" style="color:var(--imie-blue)"></i> Architecture technique</h2>
+      <p>L'infrastructure repose sur un modèle entièrement on-premise virtualisé sous VMware Workstation Pro, hébergé sur un poste physique de 16 Go RAM / 8 cœurs. 10 VMs ont été déployées sur 5 réseaux VMnet distincts (host-only) + 1 VMnet bridgé (WAN).</p>
+
+      <div id="arch-vms">
+        <h3><i class="fa-solid fa-server"></i> Inventaire des machines virtuelles</h3>
+        <table class="data-table">
+          <thead><tr><th>VM</th><th>vCPU</th><th>RAM</th><th>Disque</th><th>OS</th><th>VLAN</th><th>Rôle principal</th></tr></thead>
+          <tbody>
+            <tr><td class="tdb">PFW-PARIS-01</td><td>2</td><td>1 Go</td><td>20 Go</td><td>pfSense 2.7 CE</td><td><span class="vc v10">ALL</span></td><td>Pare-feu, routage inter-VLAN, VPN, NAT</td></tr>
+            <tr><td class="tdb">AD-DC01</td><td>2</td><td>4 Go</td><td>60 Go</td><td>Windows Server 2022</td><td><span class="vc v10">ADMIN</span></td><td>AD DS PDC, DNS autoritaire, DHCP principal</td></tr>
+            <tr><td class="tdb">AD-DC02</td><td>2</td><td>4 Go</td><td>60 Go</td><td>Windows Server 2022</td><td><span class="vc v20">SERVERS</span></td><td>AD DS secondaire, DNS, DHCP failover HA</td></tr>
+            <tr><td class="tdb">FS-SRV</td><td>2</td><td>2 Go</td><td>60 Go</td><td>Windows Server 2022</td><td><span class="vc v20">SERVERS</span></td><td>Serveur de fichiers SMB, DFS Namespace</td></tr>
+            <tr><td class="tdb">ERP-SRV</td><td>2</td><td>2 Go</td><td>40 Go</td><td>Ubuntu 22.04 LTS</td><td><span class="vc v20">SERVERS</span></td><td>Application métier Tomcat 10 + PostgreSQL 14</td></tr>
+            <tr><td class="tdb">ZBX-SRV</td><td>2</td><td>2 Go</td><td>40 Go</td><td>Ubuntu 22.04 LTS</td><td><span class="vc v20">SERVERS</span></td><td>Zabbix 6.4 — supervision monitoring</td></tr>
+            <tr><td class="tdb">WZH-MGR</td><td>2</td><td>4 Go</td><td>50 Go</td><td>Ubuntu 22.04 LTS</td><td><span class="vc v20">SERVERS</span></td><td>Wazuh 4.7 SIEM — Indexer + Manager + Dashboard</td></tr>
+            <tr><td class="tdb">WEB-FRONT</td><td>1</td><td>1 Go</td><td>20 Go</td><td>Ubuntu 22.04 LTS</td><td><span class="vc v30">DMZ</span></td><td>Nginx Reverse Proxy, terminaison TLS</td></tr>
+            <tr><td class="tdb">BASTION-SRV</td><td>1</td><td>1 Go</td><td>20 Go</td><td>Ubuntu 22.04 LTS</td><td><span class="vc v30">DMZ</span></td><td>Bastion SSH centralisé, Fail2ban</td></tr>
+            <tr><td class="tdb">CLIENT-01</td><td>2</td><td>2 Go</td><td>40 Go</td><td>Windows 10/11 Pro</td><td><span class="vc v40">USERS</span></td><td>Poste utilisateur joint ncc.local, validation GPO</td></tr>
+          </tbody>
+        </table>
+        <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture VMW-01 — Vue Library VMware Workstation Pro (10 VMs)</div><div class="ss-desc">VMware Workstation Pro > Library — Vue principale avec les 10 VMs du projet visibles</div></div>
+        <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture VMW-02 — Virtual Network Editor VMnet1 à VMnet8</div><div class="ss-desc">VMware > Edit > Virtual Network Editor — VMnet1 (ADMIN) VMnet2 (SERVERS) VMnet3 (DMZ) VMnet4 (USERS) VMnet6 (BACKUP) VMnet8 Bridged (WAN)</div></div>
+        <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture VMW-03 — PFW-PARIS 6 interfaces réseau assignées</div><div class="ss-desc">PFW-PARIS > VM Settings > Network Adapters (x6) sur VMnet1, VMnet2, VMnet3, VMnet4, VMnet6, VMnet8</div></div>
+      </div>
+
+      <div id="arch-vlan" style="margin-top:36px;">
+        <h3><i class="fa-solid fa-diagram-project"></i> Plan d'adressage et VLANs</h3>
+        <table class="data-table">
+          <thead><tr><th>Zone</th><th>Réseau</th><th>Passerelle</th><th>Composants principaux</th><th>Niveau de confiance</th></tr></thead>
+          <tbody>
+            <tr><td><span class="vc v10">VLAN 10 – ADMIN</span></td><td><code>10.10.10.0/24</code></td><td><code>10.10.10.1</code></td><td>AD-DC01 (10.10.10.10), postes admins</td><td><span class="badge br">Critique</span></td></tr>
+            <tr><td><span class="vc v20">VLAN 20 – SERVERS</span></td><td><code>10.10.20.0/24</code></td><td><code>10.10.20.1</code></td><td>AD-DC02, FS-SRV, ERP-SRV, ZBX-SRV, WZH-MGR</td><td><span class="badge by">Haute</span></td></tr>
+            <tr><td><span class="vc v30">VLAN 30 – DMZ</span></td><td><code>10.10.30.0/24</code></td><td><code>10.10.30.1</code></td><td>WEB-FRONT (10.10.30.10), BASTION-SRV (10.10.30.20)</td><td><span class="badge bb">Moyenne</span></td></tr>
+            <tr><td><span class="vc v40">VLAN 40 – USERS</span></td><td><code>10.10.40.0/24</code></td><td><code>10.10.40.1</code></td><td>15 postes collaborateurs (DHCP 10.10.40.100-200)</td><td><span class="badge bg">Normale</span></td></tr>
+            <tr><td><span class="vc v70">VLAN 70 – BACKUP</span></td><td><code>10.10.70.0/24</code></td><td><code>10.10.70.1</code></td><td>NAS Synology RAID6 (10.10.70.10)</td><td><span class="badge by">Haute</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="arch-secu" style="margin-top:36px;">
+        <h3><i class="fa-solid fa-shield-halved"></i> Modèle de sécurité — Défense en profondeur (ANSSI)</h3>
+        <table class="data-table">
+          <thead><tr><th>Couche</th><th>Mesure de sécurité</th><th>Outil / Technologie</th></tr></thead>
+          <tbody>
+            <tr><td class="tdb">1 — Périmétrique</td><td>Pare-feu à état, règles inter-VLAN granulaires, DMZ isolée</td><td>pfSense 2.7 CE (PFW-PARIS-01)</td></tr>
+            <tr><td class="tdb">1 — Périmétrique</td><td>VPN chiffré AES-256-GCM pour accès distants</td><td>OpenVPN — PKI NCC-VPN-CA (RSA 2048)</td></tr>
+            <tr><td class="tdb">2 — Identités</td><td>Authentification centralisée Kerberos, moindre privilège</td><td>Active Directory ncc.local — GPO</td></tr>
+            <tr><td class="tdb">2 — Identités</td><td>Bastion SSH — point d'entrée unique et journalisé</td><td>BASTION-SRV (10.10.30.20)</td></tr>
+            <tr><td class="tdb">3 — Endpoints</td><td>Pare-feu local, anti-bruteforce SSH (ban 5 échecs / 1h)</td><td>UFW + Fail2ban</td></tr>
+            <tr><td class="tdb">4 — Supervision</td><td>Monitoring temps réel, alertes CPU/disque/service</td><td>Zabbix 6.4 — 7 agents</td></tr>
+            <tr><td class="tdb">4 — Supervision</td><td>SIEM, IDS, FIM (/etc/passwd, shadow, sudoers), audit SSH/RDP</td><td>Wazuh 4.7 — 7 agents</td></tr>
+            <tr><td class="tdb">5 — Continuité</td><td>Sauvegardes locales RAID6 — RTO 2h / RPO 24h</td><td>NAS Synology — VLAN 70</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 1 PFSENSE -->
+    <div class="cs fade-in" id="p1">
+      <h2><i class="fa-solid fa-fire-flame-curved" style="color:var(--imie-blue)"></i> Étape 1 — pfSense &amp; Segmentation réseau en 5 VLANs</h2>
+      <div class="step-header">
+        <div class="step-num">P1</div>
+        <div><div class="step-title">pfSense 2.7 CE — Pare-feu central &amp; routage inter-VLAN</div><div class="step-sub">2 semaines — Janvier 2026</div></div>
+      </div>
+      <p>Activité la plus structurante du projet : tous les autres composants dépendent de pfSense. J'ai créé 6 VMnets dans VMware avant de déployer PFW-PARIS-01 avec 6 interfaces réseau.</p>
+
+      <h3><i class="fa-solid fa-terminal"></i> Configuration des VMnets — VMware Virtual Network Editor</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">VMware > Edit > Virtual Network Editor</span><span class="code-os">VMware Workstation Pro</span></div>
+        <pre><code><span class="cm"># 6 VMnets créés — 5 host-only + 1 bridgé</span>
+VMnet1  → Host-only  → 10.10.10.0/24  <span class="hl"># VLAN 10 ADMIN</span>
+VMnet2  → Host-only  → 10.10.20.0/24  <span class="hl"># VLAN 20 SERVERS</span>
+VMnet3  → Host-only  → 10.10.30.0/24  <span class="hl"># VLAN 30 DMZ</span>
+VMnet4  → Host-only  → 10.10.40.0/24  <span class="hl"># VLAN 40 USERS</span>
+VMnet6  → Host-only  → 10.10.70.0/24  <span class="hl"># VLAN 70 BACKUP</span>
+VMnet8  → Bridged    → carte physique  <span class="hl"># WAN pfSense</span></code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Assignation des 6 interfaces pfSense</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">pfSense > Interfaces > Assignments</span><span class="code-os">pfSense 2.7 CE</span></div>
+        <pre><code><span class="cm"># Interfaces sur PFW-PARIS-01 (2 vCPU / 1 Go RAM / 20 Go)</span>
+em0  → WAN     → 10.99.95.30/DHCP  <span class="cm"># Opérateur Internet</span>
+em1  → ADMIN   → 10.10.10.1/24
+em2  → SERVERS → 10.10.20.1/24
+em3  → DMZ     → 10.10.30.1/24
+em4  → USERS   → 10.10.40.1/24
+em5  → BACKUP  → 10.10.70.1/24
+
+<span class="cm"># Renommer les interfaces OPT1→SERVERS, OPT2→DMZ, OPT3→USERS, OPT4→BACKUP</span>
+<span class="cm"># pfSense > Interfaces > [OPTx] > Description</span></code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Règles de filtrage inter-VLAN (refus implicite par défaut)</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">pfSense > Firewall > Rules — Politique : DENY ALL sauf exceptions</span><span class="code-os">pfSense 2.7 CE</span></div>
+        <pre><code><span class="cm"># Interface USERS — règles autorisées</span>
+ALLOW  USERS  → SERVERS  TCP  389,88,445   <span class="hl"># LDAP, Kerberos, SMB</span>
+ALLOW  USERS  → DMZ      TCP  80,443       <span class="hl"># HTTP/HTTPS vers WEB-FRONT</span>
+ALLOW  USERS  → WAN      ANY              <span class="hl"># Navigation Internet</span>
+DENY   USERS  → ADMIN    ANY              <span class="cm"># Isolation VLAN Admin</span>
+DENY   USERS  → BACKUP   ANY              <span class="cm"># Isolation sauvegardes</span>
+
+<span class="cm"># DHCP Relay sur interface USERS → AD-DC01</span>
+<span class="hl">Services > DHCP Relay > Enable > Server: 10.10.10.10</span>
+
+<span class="cm"># Diagnostic WAN résolu (VMnet8 mauvaise carte physique)</span>
+<span class="wn"># Problème : ping 8.8.8.8 timeout</span>
+<span class="hl"># Fix : Edit > Virtual Network Editor > VMnet8 > sélectionner carte réseau active</span>
+<span class="cm"># Validation : ping 8.8.8.8 → 0% perte ✓</span></code></pre>
+      </div>
+
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A1 — Dashboard pfSense état des interfaces</div><div class="ss-desc">pfSense > Status > Dashboard — CPU, mémoire, interfaces WAN/ADMIN/SERVERS/DMZ/USERS/BACKUP en temps réel</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A2 — Interface Assignments — 6 interfaces configurées</div><div class="ss-desc">pfSense > Interfaces > Assignments — em0 WAN, em1 ADMIN (10.10.10.1), em2 SERVERS, em3 DMZ, em4 USERS, em5 BACKUP</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A3 — Règles inter-VLAN Interface USERS</div><div class="ss-desc">pfSense > Firewall > Rules > USERS — ALLOW vers SERVERS (LDAP 389, Kerberos 88, SMB 445), DMZ (HTTP/HTTPS), WAN</div></div>
+
+      <div class="alert al-ok"><span class="al-icon"><i class="fa-solid fa-check-circle"></i></span><span><strong>Résultat :</strong> 5 VLANs opérationnels, règles ANSSI appliquées, DHCP actif (CLIENT-01 reçoit 10.10.40.100), accès Internet validé (0% perte), 0 incident post-déploiement.</span></div>
+    </div>
+
+    <!-- ÉTAPE 2 AD -->
+    <div class="cs fade-in" id="p2">
+      <h2><i class="fa-brands fa-windows" style="color:var(--imie-blue)"></i> Étape 2 — Active Directory ncc.local</h2>
+      <div class="step-header">
+        <div class="step-num">P2</div>
+        <div><div class="step-title">Forêt ncc.local — Authentification centralisée &amp; Haute Disponibilité</div><div class="step-sub">2 semaines — Février 2026</div></div>
+      </div>
+      <p>Premier besoin fondamental : sans annuaire, impossible de gérer les accès, GPO et ressources partagées. J'ai déployé une forêt AD en HA avec deux contrôleurs de domaine.</p>
+
+      <h3><i class="fa-solid fa-terminal"></i> Préparation AD-DC01 — IPv6 et IP statique</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">PowerShell — AD-DC01 (10.10.10.10, VLAN ADMIN)</span><span class="code-os">Windows Server 2022</span></div>
+        <pre><code><span class="cm"># Désactivation IPv6 (éviter conflits DNS)</span>
+Disable-NetAdapterBinding -Name "Ethernet0" -ComponentID ms_tcpip6
+
+<span class="cm"># IP statique</span>
+New-NetIPAddress -InterfaceAlias "Ethernet0" `
+  -IPAddress 10.10.10.10 -PrefixLength 24 -DefaultGateway 10.10.10.1
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet0" -ServerAddresses 127.0.0.1</code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Promotion AD-DC01 — Création de la forêt ncc.local</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">PowerShell — Installation forêt &amp; rôles FSMO</span><span class="code-os">Windows Server 2022</span></div>
+        <pre><code><span class="cm"># Installation rôle AD DS</span>
+Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
+
+<span class="cm"># Création forêt ncc.local</span>
+Install-ADDSForest `
+  -DomainName "ncc.local" `
+  -DomainNetbiosName "NCC" `
+  -ForestMode "WinThreshold" `
+  -DomainMode "WinThreshold" `
+  -InstallDns:$true `
+  -SafeModeAdministratorPassword (ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force) `
+  -Force:$true
+<span class="cm"># Redémarrage automatique après promotion</span>
+
+<span class="cm"># Pool DHCP pour VLAN USERS</span>
+Add-DhcpServerv4Scope -Name "USERS-VLAN40" `
+  -StartRange 10.10.40.100 -EndRange 10.10.40.200 -SubnetMask 255.255.255.0
+Set-DhcpServerv4OptionValue -ScopeId 10.10.40.0 `
+  -Router 10.10.40.1 -DnsServer 10.10.10.10 -DnsDomain ncc.local</code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> AD-DC02 — Contrôleur secondaire &amp; DHCP Failover</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">PowerShell — AD-DC02 (10.10.20.11, VLAN SERVERS)</span><span class="code-os">Windows Server 2022</span></div>
+        <pre><code><span class="cm"># Promotion en DC secondaire</span>
+Install-ADDSDomainController `
+  -DomainName "ncc.local" `
+  -Credential (Get-Credential NCC\Administrator) `
+  -InstallDns:$true `
+  -SafeModeAdministratorPassword (ConvertTo-SecureString "P@ssw0rd!" -AsPlainText -Force) `
+  -Force:$true
+
+<span class="cm"># Validation réplication inter-DC</span>
+dcdiag /test:replications
+<span class="hl"># → passed ✓</span>
+
+<span class="cm"># DHCP Failover Hot Standby (bascule automatique 60s)</span>
+Add-DhcpServerv4Failover `
+  -Name "NCC-Failover" -PartnerServer "AD-DC02.ncc.local" `
+  -ScopeId 10.10.40.0 -Mode HotStandby `
+  -AutoStateTransition $true -MaxClientLeadTime 00:01:00</code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Structure OUs, Comptes &amp; GPO</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">PowerShell — OUs, groupes, comptes, GPO</span><span class="code-os">Windows Server 2022</span></div>
+        <pre><code><span class="cm"># Création des 4 Unités d'Organisation principales</span>
+$b = "DC=ncc,DC=local"
+New-ADOrganizationalUnit -Name "NCC-Paris"      -Path $b
+"Direction","Pole-Technique","Pole-Securite","Pole-Formation","Utilisateurs","Groupes","Ordinateurs","Serveurs" | ForEach-Object {
+    New-ADOrganizationalUnit -Name $_ -Path "OU=NCC-Paris,$b"
+}
+
+<span class="cm"># 8 groupes de sécurité</span>
+"GRP-Direction","GRP-Technique","GRP-Securite","GRP-Formation","GRP-Informatique","GRP-Utilisateurs","GRP-Admins","GRP-Support" | ForEach-Object {
+    New-ADGroup -Name $_ -GroupScope Global -Path "OU=Groupes,OU=NCC-Paris,$b"
+}
+
+<span class="cm"># Politique de mots de passe (8 car. min, expiration 90j, verrouillage 5 tentatives)</span>
+Set-ADDefaultDomainPasswordPolicy -Identity ncc.local `
+  -MinPasswordLength 8 -MaxPasswordAge 90.00:00:00 `
+  -LockoutThreshold 5 -LockoutObservationWindow 00:10:00
+
+<span class="cm"># GPO lecteurs réseau — via Group Policy Management Editor</span>
+<span class="cm"># User Configuration > Windows Settings > Drive Maps</span>
+<span class="hl">Z: → \\ncc.local\Partages\Utilisateurs$  (groupe GRP-Utilisateurs)</span>
+<span class="hl">S: → \\ncc.local\Partages\Commun          (tous utilisateurs du domaine)</span></code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Jonction des serveurs Linux au domaine (realmd/sssd)</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">Ubuntu 22.04 — Jonction domaine ncc.local (ERP-SRV, WZH-MGR, etc.)</span><span class="code-os">Linux</span></div>
+        <pre><code><span class="cm"># Étape 1 — Configurer DNS vers AD-DC01 (OBLIGATOIRE avant jonction)</span>
+sudo nano /etc/systemd/resolved.conf
+<span class="hl">[Resolve]
+DNS=10.10.10.10
+Domains=ncc.local</span>
+sudo systemctl restart systemd-resolved
+
+<span class="cm"># Étape 2 — Installer les paquets requis</span>
+sudo apt install -y realmd sssd sssd-tools adcli packagekit
+
+<span class="cm"># Étape 3 — Découverte et jonction</span>
+sudo realm discover ncc.local
+sudo realm join --user=Administrator ncc.local
+
+<span class="cm"># Étape 4 — Validation</span>
+realm list
+id administrator@ncc.local
+<span class="hl"># → uid=xxxxx(administrator@ncc.local) ✓</span></code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Serveur de fichiers FS-SRV — DFS &amp; Partages SMB</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">PowerShell — FS-SRV (10.10.20.20)</span><span class="code-os">Windows Server 2022</span></div>
+        <pre><code><span class="cm"># Rôles File Server + DFS Namespace</span>
+Install-WindowsFeature -Name FS-FileServer,FS-DFS-Namespace,FS-DFS-Replication -IncludeManagementTools
+
+<span class="cm"># 4 partages SMB avec permissions NTFS par groupe AD</span>
+New-SmbShare -Name "Direction$"    -Path "D:\Partages\Direction"    -FullAccess "NCC\GRP-Direction"
+New-SmbShare -Name "Informatique$" -Path "D:\Partages\Informatique" -FullAccess "NCC\GRP-Informatique"
+New-SmbShare -Name "Utilisateurs$" -Path "D:\Partages\Utilisateurs" -FullAccess "NCC\GRP-Utilisateurs"
+New-SmbShare -Name "Commun"        -Path "D:\Partages\Commun"       -ReadAccess  "NCC\Utilisateurs du domaine"
+
+<span class="cm"># Namespace DFS \\ncc.local\Partages</span>
+New-DfsnRoot   -TargetPath "\\FS-SRV\Partages"        -Type DomainV2 -Path "\\ncc.local\Partages"
+New-DfsnFolder -Path "\\ncc.local\Partages\Direction"    -TargetPath "\\FS-SRV\Direction$"
+New-DfsnFolder -Path "\\ncc.local\Partages\Informatique" -TargetPath "\\FS-SRV\Informatique$"
+New-DfsnFolder -Path "\\ncc.local\Partages\Utilisateurs" -TargetPath "\\FS-SRV\Utilisateurs$"
+New-DfsnFolder -Path "\\ncc.local\Partages\Commun"       -TargetPath "\\FS-SRV\Commun"</code></pre>
+      </div>
+
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A7 — Structure des OUs NCC-Paris</div><div class="ss-desc">AD Users and Computers > ncc.local > NCC-Paris — Direction, Pole-Technique, Pole-Securite, Pole-Formation, Utilisateurs, Ordinateurs, Serveurs</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A8 — Groupe GRP-Direction membres</div><div class="ss-desc">AD Users and Computers > NCC-Paris > Groupes > GRP-Direction > Propriétés > Membres</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A9 — DFS namespace ncc.local opérationnel</div><div class="ss-desc">FS-SRV (10.10.20.20) > DFS Management > Namespaces > ncc.local > Partages avec 4 dossiers</div></div>
+
+      <div class="alert al-ok"><span class="al-icon"><i class="fa-solid fa-check-circle"></i></span><span><strong>Résultat :</strong> 15 comptes AD actifs, 8 groupes, 4 OUs. 5 serveurs Ubuntu + 1 Windows joints au domaine. Réplication DC validée (dcdiag passed). Namespace DFS et GPO opérationnels.</span></div>
+    </div>
+
+    <!-- ÉTAPE 3 LINUX -->
+    <div class="cs fade-in" id="p3">
+      <h2><i class="fa-brands fa-linux" style="color:var(--imie-blue)"></i> Étape 3 — Services Linux &amp; Applicatif ERP</h2>
+      <div class="step-header">
+        <div class="step-num">P3</div>
+        <div><div class="step-title">ERP-SRV · WEB-FRONT · BASTION-SRV</div><div class="step-sub">1 semaine — Mars 2026</div></div>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> ERP-SRV — Tomcat 10 &amp; PostgreSQL 14</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">Ubuntu 22.04 — ERP-SRV (10.10.20.30)</span><span class="code-os">Linux</span></div>
+        <pre><code><span class="cm"># IP statique via Netplan</span>
+sudo nano /etc/netplan/00-installer-config.yaml
+<span class="hl">network:
+  version: 2
+  ethernets:
+    ens33:
+      addresses: [10.10.20.30/24]
+      gateway4: 10.10.20.1
+      nameservers:
+        addresses: [10.10.10.10]
+        search: [ncc.local]</span>
+sudo netplan apply
+
+<span class="cm"># Java 17 + Tomcat 10</span>
+sudo apt install -y openjdk-17-jdk
+sudo useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
+<span class="cm"># Télécharger et extraire Tomcat 10 dans /opt/tomcat</span>
+<span class="cm"># Créer service systemd tomcat.service</span>
+sudo systemctl daemon-reload && sudo systemctl enable --now tomcat
+
+<span class="cm"># PostgreSQL 14</span>
+sudo apt install -y postgresql postgresql-contrib
+sudo -u postgres psql -c "CREATE DATABASE erp_ncc;"
+sudo -u postgres psql -c "CREATE USER erp_user WITH ENCRYPTED PASSWORD 'P@ssERP!';"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE erp_ncc TO erp_user;"
+
+<span class="cm"># UFW — TCP 8080 depuis SERVERS et DMZ uniquement</span>
+sudo ufw allow from 10.10.20.0/24 to any port 8080
+sudo ufw allow from 10.10.30.0/24 to any port 8080 && sudo ufw enable</code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> WEB-FRONT — Nginx Reverse Proxy + TLS (DMZ)</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">Ubuntu 22.04 — WEB-FRONT (10.10.30.10)</span><span class="code-os">Linux</span></div>
+        <pre><code><span class="cm"># Installation Nginx</span>
+sudo apt install -y nginx
+
+<span class="cm"># Certificat TLS auto-signé</span>
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /etc/ssl/private/ncc-selfsigned.key \
+  -out /etc/ssl/certs/ncc-selfsigned.crt \
+  -subj "/C=FR/ST=IDF/L=Saint-Denis/O=NCC/CN=ncc.local"
+
+<span class="cm"># Virtual host Nginx — /etc/nginx/sites-available/ncc</span>
+<span class="hl">server {
+    listen 80;
+    return 301 https://$host$request_uri;
+}
+server {
+    listen 443 ssl;
+    ssl_certificate     /etc/ssl/certs/ncc-selfsigned.crt;
+    ssl_certificate_key /etc/ssl/private/ncc-selfsigned.key;
+    location / {
+        proxy_pass http://10.10.20.30:8080;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+    location /monitoring {
+        proxy_pass http://10.10.20.40/zabbix;
+    }
+}</span>
+sudo ln -s /etc/nginx/sites-available/ncc /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx</code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> BASTION-SRV — SSH sécurisé centralisé (DMZ)</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">Ubuntu 22.04 — BASTION-SRV (10.10.30.20)</span><span class="code-os">Linux</span></div>
+        <pre><code><span class="cm"># Durcissement sshd_config</span>
+sudo nano /etc/ssh/sshd_config
+<span class="hl">PasswordAuthentication no
+PermitRootLogin no
+PubkeyAuthentication yes
+MaxAuthTries 3</span>
+sudo systemctl reload ssh
+
+<span class="cm"># Fail2ban — ban SSH après 5 échecs en 10 min, durée 1h</span>
+sudo apt install -y fail2ban
+sudo nano /etc/fail2ban/jail.local
+<span class="hl">[sshd]
+enabled  = true
+maxretry = 5
+findtime = 600
+bantime  = 3600</span>
+sudo systemctl enable --now fail2ban
+
+<span class="cm"># Validation</span>
+sudo systemctl status fail2ban
+<span class="hl"># → Active: active (running) ✓</span>
+sudo fail2ban-client status sshd</code></pre>
+      </div>
+
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture Bastion-01 — Statut Fail2ban Active (running)</div><div class="ss-desc">admin-bastion@bastion > sudo systemctl status fail2ban</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture Bastion-02 — Connexion admin SSH &amp; statut UFW actif</div><div class="ss-desc">admin-bastion@bastion > sudo systemctl status ufw verbose</div></div>
+
+      <div class="alert al-ok"><span class="al-icon"><i class="fa-solid fa-check-circle"></i></span><span><strong>Résultat :</strong> Tomcat 10 et PostgreSQL 14 opérationnels. Nginx avec TLS actif, reverse proxy fonctionnel. Bastion SSH opérationnel, Fail2ban actif, sessions SSH journalisées dans Wazuh.</span></div>
+    </div>
+
+    <!-- ÉTAPE 4 SUPERVISION -->
+    <div class="cs fade-in" id="p4">
+      <h2><i class="fa-solid fa-gauge-high" style="color:var(--imie-blue)"></i> Étape 4 — Supervision Zabbix 6.4 &amp; SIEM Wazuh 4.7</h2>
+      <div class="step-header">
+        <div class="step-num">P4</div>
+        <div><div class="step-title">Monitoring temps réel &amp; Détection d'incidents de sécurité</div><div class="step-sub">1 semaine — Mars 2026</div></div>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Déploiement Zabbix Server 6.4</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">Ubuntu 22.04 — ZBX-SRV (10.10.20.40)</span><span class="code-os">Linux</span></div>
+        <pre><code><span class="cm"># Ajout dépôt officiel Zabbix 6.4</span>
+wget https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu22.04_all.deb
+sudo dpkg -i zabbix-release_6.4-1+ubuntu22.04_all.deb && sudo apt update
+
+<span class="cm"># Installation</span>
+sudo apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent mariadb-server
+
+<span class="cm"># Base de données MariaDB</span>
+sudo mysql -uroot -e "CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;"
+sudo mysql -uroot -e "CREATE USER 'zabbix'@'localhost' IDENTIFIED BY 'P@ssZBX!';"
+sudo mysql -uroot -e "GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix'@'localhost';"
+zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql -uzabbix -p zabbix
+
+<span class="cm"># Démarrage Zabbix Server</span>
+sudo systemctl enable --now zabbix-server zabbix-agent apache2
+<span class="hl"># WebUI accessible : http://10.10.20.40/zabbix</span>
+
+<span class="cm"># Seuils d'alerte configurés dans WebUI</span>
+<span class="hl">CPU > 80%     → WARNING</span>
+<span class="hl">Disque < 10%  → HIGH</span>
+<span class="hl">Service down  → DISASTER</span>
+<span class="cm"># Templates : "Windows by Zabbix agent" + "Linux by Zabbix agent"</span></code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Agent Zabbix — Déploiement sur les 7 hôtes</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">Agent Zabbix — Ubuntu (identique sur chaque VM Linux)</span><span class="code-os">Linux</span></div>
+        <pre><code><span class="cm"># Installation agent</span>
+sudo apt install -y zabbix-agent
+
+<span class="cm"># Configuration /etc/zabbix/zabbix_agentd.conf</span>
+<span class="hl">Server=10.10.20.40
+ServerActive=10.10.20.40
+Hostname=[NOM_DE_LA_VM]</span>
+
+sudo systemctl enable --now zabbix-agent
+<span class="cm"># Vérification depuis ZBX-SRV : Monitoring > Hosts > statut vert</span></code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Déploiement Wazuh 4.7 All-in-One</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">Ubuntu 22.04 — WZH-MGR (10.10.20.50)</span><span class="code-os">Linux</span></div>
+        <pre><code><span class="cm"># Installation Wazuh 4.7 (Indexer + Manager + Dashboard)</span>
+curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
+sudo bash wazuh-install.sh -a
+
+<span class="wn"># Problème 1 : JVM heap insuffisant (RAM limitée à 4 Go)</span>
+<span class="cm"># Correction /etc/wazuh-indexer/jvm.options</span>
+<span class="hl">-Xms512m
+-Xmx512m</span>
+
+<span class="wn"># Problème 2 : répertoire manquant</span>
+sudo mkdir -p /var/log/wazuh-indexer/
+sudo chown -R wazuh-indexer: /var/log/wazuh-indexer/
+sudo systemctl restart wazuh-indexer wazuh-manager
+<span class="hl"># Dashboard accessible : https://10.10.20.50</span></code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Configuration FIM &amp; Audit Wazuh (7 agents)</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">ossec.conf — FIM (File Integrity Monitoring)</span><span class="code-os">Linux / Windows</span></div>
+        <pre><code><span class="cm"># FIM Linux — fichiers critiques surveillés</span>
+<span class="hl">&lt;syscheck&gt;
+  &lt;frequency&gt;43200&lt;/frequency&gt;
+  &lt;directories check_all="yes"&gt;/etc/passwd&lt;/directories&gt;
+  &lt;directories check_all="yes"&gt;/etc/shadow&lt;/directories&gt;
+  &lt;directories check_all="yes"&gt;/etc/sudoers&lt;/directories&gt;
+  &lt;directories check_all="yes"&gt;/etc/ssh/sshd_config&lt;/directories&gt;
+&lt;/syscheck&gt;</span>
+
+<span class="cm"># FIM Windows</span>
+<span class="hl">&lt;directories check_all="yes"&gt;C:\Windows\System32&lt;/directories&gt;</span>
+
+<span class="cm"># Audit connexions SSH</span>
+<span class="hl">&lt;localfile&gt;
+  &lt;log_format&gt;syslog&lt;/log_format&gt;
+  &lt;location&gt;/var/log/auth.log&lt;/location&gt;
+&lt;/localfile&gt;</span>
+
+<span class="cm"># Intégration logs Nginx (WEB-FRONT)</span>
+<span class="hl">&lt;localfile&gt;
+  &lt;log_format&gt;apache&lt;/log_format&gt;
+  &lt;location&gt;/var/log/nginx/access.log&lt;/location&gt;
+&lt;/localfile&gt;</span></code></pre>
+      </div>
+
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A10 — Zabbix Dashboard 7 hôtes supervisés</div><div class="ss-desc">http://10.10.20.40/zabbix > Monitoring > Dashboard — AD-DC01, AD-DC02, FS-SRV, ERP-SRV, ZBX-SRV, WZH-MGR, BASTION-SRV — statut vert</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A11 — Wazuh Dashboard 7 agents actifs</div><div class="ss-desc">https://10.10.20.50 > Agents — 7 agents actifs, FIM et IDS opérationnels, alertes de sécurité récentes</div></div>
+
+      <div class="alert al-ok"><span class="al-icon"><i class="fa-solid fa-check-circle"></i></span><span><strong>Résultat :</strong> 7/7 agents Zabbix actifs, 7/7 agents Wazuh actifs, FIM opérationnel sur tous les fichiers critiques, MTTD &lt; 5 min, tableaux de bord temps réel opérationnels.</span></div>
+    </div>
+
+    <!-- ÉTAPE 5 VPN -->
+    <div class="cs fade-in" id="p5">
+      <h2><i class="fa-solid fa-lock" style="color:var(--imie-blue)"></i> Étape 5 — VPN OpenVPN &amp; PKI NCC-VPN-CA</h2>
+      <div class="step-header">
+        <div class="step-num">P5</div>
+        <div><div class="step-title">Accès distant sécurisé AES-256-GCM — Configuration manuelle intégrale</div><div class="step-sub">1 semaine — Avril 2026</div></div>
+      </div>
+
+      <div class="alert al-warn"><span class="al-icon"><i class="fa-solid fa-triangle-exclamation"></i></span><span><strong>Contrainte technique :</strong> Le package <code>openvpn-client-export</code> était indisponible (incompatibilité <code>libssl.so.30</code>). L'intégralité de la PKI et du VPN a été configurée manuellement — ce qui a abouti à une maîtrise concrète des PKI et de la cryptographie appliquée.</span></div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Création PKI NCC-VPN-CA</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">pfSense > System > Cert. Manager > CAs</span><span class="code-os">pfSense 2.7 CE</span></div>
+        <pre><code><span class="cm"># Autorité de Certification interne</span>
+Descriptive name : NCC-VPN-CA
+Method           : Create an internal Certificate Authority
+Key type         : RSA / Key length : 2048 bits
+Digest algorithm : SHA256
+Lifetime         : 3650 jours (10 ans)
+Common Name      : NCC-VPN-CA
+C=FR / ST=IDF / L=Saint-Denis / O=NCC
+
+<span class="cm"># Certificat serveur VPN</span>
+<span class="hl">Name: NCC-VPN-Server | CA: NCC-VPN-CA | RSA 2048 | SHA256 | 3650j</span>
+
+<span class="cm"># Certificat client VPN</span>
+<span class="hl">Name: NCC-VPN-Client | Type: User Certificate | CA: NCC-VPN-CA</span></code></pre>
+      </div>
+
+      <h3><i class="fa-solid fa-terminal"></i> Configuration serveur OpenVPN</h3>
+      <div class="code-block">
+        <div class="code-header"><span class="code-label">pfSense > VPN > OpenVPN > Servers</span><span class="code-os">pfSense 2.7 CE</span></div>
+        <pre><code><span class="cm"># Paramètres serveur</span>
+Server Mode         : Remote Access (SSL/TLS)
+Protocol            : UDP on IPv4 only / Interface : WAN / Port : 1194
+CA                  : NCC-VPN-CA
+Certificate         : NCC-VPN-Server
+Data Encryption     : AES-256-GCM, AES-128-GCM, CHACHA20-POLY1305
+Auth digest         : SHA256
+DH Parameters       : 2048 bits
+Tunnel Network      : 10.8.0.0/24
+
+<span class="cm"># Réseaux accessibles par les clients VPN</span>
+Local Network       : 10.10.10.0/24, 10.10.20.0/24, 10.10.30.0/24, 10.10.40.0/24
+<span class="hl">DNS Server          : 10.10.10.10  # Résolution ncc.local</span>
+DNS Domain          : ncc.local
+
+<span class="cm"># Règle pfSense WAN — UDP/1194</span>
+<span class="hl">Firewall > Rules > WAN : ALLOW UDP 1194 → pfSense</span>
+
+<span class="cm"># Interface ovpns1</span>
+<span class="hl">Interfaces > Assignments > ovpns1 : activer et nommer</span></code></pre>
+      </div>
+
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A4 — Serveur OpenVPN NCC-VPN-Acces-Distant</div><div class="ss-desc">pfSense > VPN > OpenVPN > Servers — mode SSL/TLS, UDP/1194, AES-256-GCM, tunnel 10.8.0.0/24</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A5 — Statut OpenVPN service ovpns1 UP</div><div class="ss-desc">pfSense > Status > OpenVPN — NCC-VPN-Acces-Distant UP, UDP4:1194, interface ovpns1</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A6 — Cert. Manager PKI NCC-VPN-CA</div><div class="ss-desc">pfSense > System > Cert. Manager — CA NCC-VPN-CA (RSA 2048, SHA256, 10 ans) + NCC-VPN-Server + NCC-VPN-Client</div></div>
+
+      <div class="alert al-ok"><span class="al-icon"><i class="fa-solid fa-check-circle"></i></span><span><strong>Résultat :</strong> VPN OpenVPN opérationnel, chiffrement AES-256-GCM actif, PKI NCC-VPN-CA fonctionnelle, accès distant validé depuis un poste extérieur.</span></div>
+    </div>
+
+    <!-- ÉTAPE 6 BACKUP -->
+    <div class="cs fade-in" id="p6">
+      <h2><i class="fa-solid fa-database" style="color:var(--imie-blue)"></i> Étape 6 — Politique de sauvegarde 3-2-1</h2>
+      <div class="step-header">
+        <div class="step-num">P6</div>
+        <div><div class="step-title">NAS Synology RAID6 — Continuité d'activité (RTO ≤ 2h)</div><div class="step-sub">Continu — Janvier–Avril 2026</div></div>
+      </div>
+      <p>Aucun plan de sauvegarde n'existait. J'ai mis en place la politique 3-2-1 : 3 copies des données, sur 2 supports différents, dont 1 hors site (Azure Blob Storage, prévu Mission 2).</p>
+      <table class="data-table">
+        <thead><tr><th>Serveur</th><th>Type sauvegarde</th><th>Fréquence</th><th>Heure</th><th>Rétention</th></tr></thead>
+        <tbody>
+          <tr><td class="tdb">AD-DC01</td><td>Système complet + AD</td><td>Incrémentielle quotidienne</td><td>02h00</td><td>30 jours</td></tr>
+          <tr><td class="tdb">AD-DC02</td><td>Système complet + AD</td><td>Incrémentielle quotidienne</td><td>02h00</td><td>30 jours</td></tr>
+          <tr><td class="tdb">FS-SRV</td><td>Données DFS / Partages</td><td>Complète hebdomadaire</td><td>Dim 03h00</td><td>30 jours</td></tr>
+          <tr><td class="tdb">ERP-SRV</td><td>BDD PostgreSQL + config</td><td>Incrémentielle quotidienne</td><td>02h30</td><td>30 jours</td></tr>
+          <tr><td class="tdb">WZH-MGR</td><td>Logs SIEM + config</td><td>Incrémentielle quotidienne</td><td>03h30</td><td>30 jours</td></tr>
+        </tbody>
+      </table>
+      <div class="kpi-grid" style="max-width:440px;">
+        <div class="kpi-card"><div class="kpi-v">38 min</div><div class="kpi-l">RTO mesuré (objectif ≤ 2h)</div></div>
+        <div class="kpi-card"><div class="kpi-v">24h</div><div class="kpi-l">RPO actuel (cible 15 min en M2)</div></div>
+      </div>
+      <div class="alert al-info"><span class="al-icon"><i class="fa-solid fa-circle-info"></i></span><span><strong>Perspective Mission 2 :</strong> Extension Azure Blob Storage pour 3e copie hors site. RPO cible ≤ 15 minutes avec sauvegarde continue.</span></div>
+    </div>
+
+    <!-- RÉSULTATS -->
+    <div class="cs fade-in" id="resultats">
+      <h2><i class="fa-solid fa-chart-bar" style="color:var(--imie-blue)"></i> Résultats &amp; KPI</h2>
+      <table class="data-table">
+        <thead><tr><th>Activité</th><th>KPI / Résultat mesuré</th><th>Statut</th></tr></thead>
+        <tbody>
+          <tr><td class="tdb">pfSense + 5 VLANs</td><td>5 VLANs actifs, règles ANSSI appliquées, 0 incident</td><td><span class="badge bg">✓</span></td></tr>
+          <tr><td class="tdb">Active Directory HA</td><td>15 comptes, 8 groupes, 4 OUs, dcdiag replications passed</td><td><span class="badge bg">✓</span></td></tr>
+          <tr><td class="tdb">ERP-SRV Tomcat/PostgreSQL</td><td>Tomcat 10 UP, PostgreSQL 14 UP, application accessible</td><td><span class="badge bg">✓</span></td></tr>
+          <tr><td class="tdb">WEB-FRONT Nginx + TLS</td><td>TLS actif, reverse proxy fonctionnel, logs Nginx dans Wazuh</td><td><span class="badge bg">✓</span></td></tr>
+          <tr><td class="tdb">BASTION-SRV</td><td>Fail2ban actif, SSH journalisé, agent Wazuh actif</td><td><span class="badge bg">✓</span></td></tr>
+          <tr><td class="tdb">Supervision Zabbix + Wazuh</td><td>7/7 agents Zabbix, 7/7 Wazuh, FIM actif, MTTD &lt; 5 min</td><td><span class="badge bg">✓</span></td></tr>
+          <tr><td class="tdb">VPN OpenVPN PKI</td><td>AES-256-GCM actif, PKI NCC-VPN-CA, accès distant validé</td><td><span class="badge bg">✓</span></td></tr>
+          <tr><td class="tdb">Sauvegarde NAS 3-2-1</td><td>RTO mesuré 38 min, tests restauration AD-DC01 + FS-SRV validés</td><td><span class="badge bg">✓</span></td></tr>
+          <tr><td class="tdb">CLIENT-01</td><td>GPO appliquées, lecteurs Z:/S: mappés, Kerberos validé</td><td><span class="badge bg">✓</span></td></tr>
+          <tr><td class="tdb">Documentation DAT/DEX/DSR</td><td>DAT v1.0 + DEX + DSR + Plan IP livrés sur DFS \\ncc.local\Partages\Informatique</td><td><span class="badge bg">✓</span></td></tr>
+        </tbody>
+      </table>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A12 — CLIENT-01 intégration domaine ncc.local</div><div class="ss-desc">CLIENT-01 > Panneau de configuration > Système > Nom de l'ordinateur — Domaine ncc.local confirmé</div></div>
+    </div>
+
+    <!-- RISQUES & PERSPECTIVES -->
+    <div class="cs fade-in" id="perspectives">
+      <h2><i class="fa-solid fa-road" style="color:var(--imie-blue)"></i> Risques identifiés &amp; Perspectives Mission 2</h2>
+      <table class="data-table">
+        <thead><tr><th>Constat</th><th>Risque associé</th><th>Criticité</th><th>Plan Mission 2</th></tr></thead>
+        <tbody>
+          <tr><td class="tdb">Hôte VMware unique (SPOF)</td><td>Panne matérielle = arrêt total SI</td><td><span class="badge br">HAUTE</span></td><td>Migration ESXi 8 + vCenter 8 (vMotion, DRS, HA)</td></tr>
+          <tr><td class="tdb">Absence ticketing GLPI</td><td>Incidents non tracés, KPIs indisponibles</td><td><span class="badge by">MOYENNE</span></td><td>Déploiement GLPI + CMDB</td></tr>
+          <tr><td class="tdb">RPO 24h</td><td>Perte données jusqu'à 24h</td><td><span class="badge by">MOYENNE</span></td><td>Azure Blob Storage — RPO cible 15 min</td></tr>
+          <tr><td class="tdb">MFA non implémenté</td><td>Authentification mot de passe uniquement</td><td><span class="badge by">MOYENNE</span></td><td>Azure MFA ou TOTP</td></tr>
+          <tr><td class="tdb">openvpn-client-export indisponible</td><td>Déploiement client VPN manuel complexe</td><td><span class="badge bg">FAIBLE</span></td><td>Upgrade pfSense ou script .ovpn automatisé</td></tr>
+        </tbody>
+      </table>
+      <h3><i class="fa-solid fa-arrow-right-long"></i> Objectifs Mission 2</h3>
+      <table class="data-table">
+        <thead><tr><th>Objectif</th><th>Description</th><th>Priorité</th></tr></thead>
+        <tbody>
+          <tr><td class="tdb">Site Abidjan + VPN IPSec site-à-site</td><td>Infrastructure secondaire + VPN IPSec (AES-256/SHA-256/DH14)</td><td><span class="badge br">HAUTE</span></td></tr>
+          <tr><td class="tdb">Migration ESXi 8 + vCenter 8</td><td>Virtualisation production — suppression SPOF physique</td><td><span class="badge br">HAUTE</span></td></tr>
+          <tr><td class="tdb">Déploiement GLPI + CMDB</td><td>Gestion des tickets, inventaire automatique</td><td><span class="badge by">MOYENNE</span></td></tr>
+          <tr><td class="tdb">Sauvegarde cloud Azure</td><td>Règle 3-2-1 complète avec 1 copie hors site</td><td><span class="badge by">MOYENNE</span></td></tr>
+          <tr><td class="tdb">MFA &amp; sécurité avancée</td><td>Azure MFA / TOTP, EDR, PAM</td><td><span class="badge by">MOYENNE</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="text-align:center;margin-top:60px;padding-top:40px;border-top:1px solid var(--border);">
+      <p style="color:var(--muted);margin-bottom:20px;font-size:15px;">Découvrir d'autres projets</p>
+      <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+        <a href="eris-corp-iam.html" class="btn btn-secondary"><i class="fa-solid fa-arrow-right"></i> Projet suivant : ERIS-CORP IAM</a>
+        <a href="../index.html#projets" class="btn btn-outline"><i class="fa-solid fa-grid-2"></i> Tous les projets</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>Ranguebaye Nantara &nbsp;·&nbsp; Administrateur Systèmes, Réseaux &amp; Sécurité &nbsp;·&nbsp; <span id="year"></span></p>
+</footer>
 <script src="../assets/js/main.js"></script>
 </body>
 </html>
