@@ -6,6 +6,59 @@
 <title>Projet ERIS-CORP – Gestion des Identités et des Accès</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
+
+   /* ── NAV BACK ── */
+  .nav-back {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 52px;
+    background: rgba(6,12,16,0.95);
+    border-bottom: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    gap: 24px;
+    z-index: 500;
+    backdrop-filter: blur(10px);
+  }
+
+  .back-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--accent);
+    text-decoration: none;
+    font-family: var(--code);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: gap 0.2s;
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+  }
+
+  .back-btn:hover { gap: 14px; border-color: var(--accent); color: var(--white); }
+
+  .back-arrow { font-size: 14px; }
+
+  .nav-breadcrumb {
+    font-family: var(--code);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 1px;
+  }
+
+  .nav-breadcrumb span { color: var(--text2); }
+
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: blink 2s ease-in-out infinite;
+    margin-left: auto;
+  }
+
+  @keyframes blink { 0%,100%{opacity:0.3} 50%{opacity:1} }
   :root {
     --bg: #070d14;
     --bg2: #0b1520;
@@ -779,7 +832,8 @@
     <span class="back-arrow">←</span>
     <span>Retour Portfolio</span>
   </a>
-  <span class="nav-breadcrumb">projets / <span>supervision-securite</span></span>
+  <span class="nav-breadcrumb">projets / <span>Gestion des Identités
+et des Accès</span></span>
   <div class="nav-dot"></div>
 </nav>
 <!-- ══ HERO ══ -->
