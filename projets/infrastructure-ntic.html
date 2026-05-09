@@ -207,8 +207,11 @@
           </tbody>
         </table>
         <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture VMW-01 — Vue Library VMware Workstation Pro (10 VMs)</div><div class="ss-desc">VMware Workstation Pro > Library — Vue principale avec les 10 VMs du projet visibles</div></div>
+        <img src="../assets/img/vmw-01.png" alt="Capture VMW-01 — Vue Library VMware Workstation Pro (10 VMs)" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;">
         <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture VMW-02 — Virtual Network Editor VMnet1 à VMnet8</div><div class="ss-desc">VMware > Edit > Virtual Network Editor — VMnet1 (ADMIN) VMnet2 (SERVERS) VMnet3 (DMZ) VMnet4 (USERS) VMnet6 (BACKUP) VMnet8 Bridged (WAN)</div></div>
+        <img src="../assets/img/vmw-02.png" alt="Capture VMW-02 — Virtual Network Editor VMnet1 à VMnet8" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;">
         <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture VMW-03 — PFW-PARIS 6 interfaces réseau assignées</div><div class="ss-desc">PFW-PARIS > VM Settings > Network Adapters (x6) sur VMnet1, VMnet2, VMnet3, VMnet4, VMnet6, VMnet8</div></div>
+        <img src="../assets/img/vmw-03.png" alt="Capture VMW-03 — PFW-PARIS 6 interfaces réseau assignées" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;">
       </div>
 
       <div id="arch-vlan" style="margin-top:36px;">
@@ -298,9 +301,12 @@ DENY   USERS  → BACKUP   ANY              <span class="cm"># Isolation sauvega
 <span class="cm"># Validation : ping 8.8.8.8 → 0% perte ✓</span></code></pre>
       </div>
 
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A1 — Dashboard pfSense état des interfaces</div><div class="ss-desc">pfSense > Status > Dashboard — CPU, mémoire, interfaces WAN/ADMIN/SERVERS/DMZ/USERS/BACKUP en temps réel</div></div>
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A2 — Interface Assignments — 6 interfaces configurées</div><div class="ss-desc">pfSense > Interfaces > Assignments — em0 WAN, em1 ADMIN (10.10.10.1), em2 SERVERS, em3 DMZ, em4 USERS, em5 BACKUP</div></div>
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A3 — Règles inter-VLAN Interface USERS</div><div class="ss-desc">pfSense > Firewall > Rules > USERS — ALLOW vers SERVERS (LDAP 389, Kerberos 88, SMB 445), DMZ (HTTP/HTTPS), WAN</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A1 — Dashboard pfSense état des interfaces</div><div class="ss-desc">pfSense > Status > Dashboard — CPU, mémoire, interfaces WAN/ADMIN/SERVERS/DMZ/USERS/BACKUP en temps réel</div>
+        <img src="../assets/img/pfsense-a1.png" alt="Capture A1 — Dashboard pfSense état des interfaces" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A2 — Interface Assignments — 6 interfaces configurées</div><div class="ss-desc">pfSense > Interfaces > Assignments — em0 WAN, em1 ADMIN (10.10.10.1), em2 SERVERS, em3 DMZ, em4 USERS, em5 BACKUP</div>
+        <img src="../assets/img/pfsense-a2.png" alt="Capture A2 — Interface Assignments — 6 interfaces configurées" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A3 — Règles inter-VLAN Interface USERS</div><div class="ss-desc">pfSense > Firewall > Rules > USERS — ALLOW vers SERVERS (LDAP 389, Kerberos 88, SMB 445), DMZ (HTTP/HTTPS), WAN</div>
+        <img src="../assets/img/pfsense-a3.png" alt="Capture A3 — Règles inter-VLAN Interface USERS" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
 
       <div class="alert al-ok"><span class="al-icon"><i class="fa-solid fa-check-circle"></i></span><span><strong>Résultat :</strong> 5 VLANs opérationnels, règles ANSSI appliquées, DHCP actif (CLIENT-01 reçoit 10.10.40.100), accès Internet validé (0% perte), 0 incident post-déploiement.</span></div>
     </div>
@@ -441,9 +447,12 @@ New-DfsnFolder -Path "\\ncc.local\Partages\Utilisateurs" -TargetPath "\\FS-SRV\U
 New-DfsnFolder -Path "\\ncc.local\Partages\Commun"       -TargetPath "\\FS-SRV\Commun"</code></pre>
       </div>
 
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A7 — Structure des OUs NCC-Paris</div><div class="ss-desc">AD Users and Computers > ncc.local > NCC-Paris — Direction, Pole-Technique, Pole-Securite, Pole-Formation, Utilisateurs, Ordinateurs, Serveurs</div></div>
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A8 — Groupe GRP-Direction membres</div><div class="ss-desc">AD Users and Computers > NCC-Paris > Groupes > GRP-Direction > Propriétés > Membres</div></div>
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A9 — DFS namespace ncc.local opérationnel</div><div class="ss-desc">FS-SRV (10.10.20.20) > DFS Management > Namespaces > ncc.local > Partages avec 4 dossiers</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A7 — Structure des OUs NCC-Paris</div><div class="ss-desc">AD Users and Computers > ncc.local > NCC-Paris — Direction, Pole-Technique, Pole-Securite, Pole-Formation, Utilisateurs, Ordinateurs, Serveurs</div>
+        <img src="../assets/img/ad-a7.png" alt="Capture A7 — Structure des OUs NCC-Paris" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A8 — Groupe GRP-Direction membres</div><div class="ss-desc">AD Users and Computers > NCC-Paris > Groupes > GRP-Direction > Propriétés > Membres</div>
+        <img src="../assets/img/ad-a8.png" alt="Capture A8 — Groupe GRP-Direction membres" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A9 — DFS namespace ncc.local opérationnel</div><div class="ss-desc">FS-SRV (10.10.20.20) > DFS Management > Namespaces > ncc.local > Partages avec 4 dossiers</div>
+        <img src="../assets/img/dfs-a9.png" alt="Capture A9 — DFS namespace ncc.local opérationnel" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
 
       <div class="alert al-ok"><span class="al-icon"><i class="fa-solid fa-check-circle"></i></span><span><strong>Résultat :</strong> 15 comptes AD actifs, 8 groupes, 4 OUs. 5 serveurs Ubuntu + 1 Windows joints au domaine. Réplication DC validée (dcdiag passed). Namespace DFS et GPO opérationnels.</span></div>
     </div>
@@ -551,8 +560,10 @@ sudo systemctl status fail2ban
 sudo fail2ban-client status sshd</code></pre>
       </div>
 
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture Bastion-01 — Statut Fail2ban Active (running)</div><div class="ss-desc">admin-bastion@bastion > sudo systemctl status fail2ban</div></div>
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture Bastion-02 — Connexion admin SSH &amp; statut UFW actif</div><div class="ss-desc">admin-bastion@bastion > sudo systemctl status ufw verbose</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture Bastion-01 — Statut Fail2ban Active (running)</div><div class="ss-desc">admin-bastion@bastion > sudo systemctl status fail2ban</div>
+        <img src="../assets/img/bastion-01.png" alt="Capture Bastion-01 — Statut Fail2ban Active (running)" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture Bastion-02 — Connexion admin SSH &amp; statut UFW actif</div><div class="ss-desc">admin-bastion@bastion > sudo systemctl status ufw verbose</div>
+        <img src="../assets/img/bastion-02.png" alt="Capture Bastion-02 — Connexion admin SSH &amp; statut UFW actif" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
 
       <div class="alert al-ok"><span class="al-icon"><i class="fa-solid fa-check-circle"></i></span><span><strong>Résultat :</strong> Tomcat 10 et PostgreSQL 14 opérationnels. Nginx avec TLS actif, reverse proxy fonctionnel. Bastion SSH opérationnel, Fail2ban actif, sessions SSH journalisées dans Wazuh.</span></div>
     </div>
@@ -654,8 +665,10 @@ sudo systemctl restart wazuh-indexer wazuh-manager
 &lt;/localfile&gt;</span></code></pre>
       </div>
 
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A10 — Zabbix Dashboard 7 hôtes supervisés</div><div class="ss-desc">http://10.10.20.40/zabbix > Monitoring > Dashboard — AD-DC01, AD-DC02, FS-SRV, ERP-SRV, ZBX-SRV, WZH-MGR, BASTION-SRV — statut vert</div></div>
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A11 — Wazuh Dashboard 7 agents actifs</div><div class="ss-desc">https://10.10.20.50 > Agents — 7 agents actifs, FIM et IDS opérationnels, alertes de sécurité récentes</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A10 — Zabbix Dashboard 7 hôtes supervisés</div><div class="ss-desc">http://10.10.20.40/zabbix > Monitoring > Dashboard — AD-DC01, AD-DC02, FS-SRV, ERP-SRV, ZBX-SRV, WZH-MGR, BASTION-SRV — statut vert</div>
+        <img src="../assets/img/zabbix-a10.png" alt="Capture A10 — Zabbix Dashboard 7 hôtes supervisés" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A11 — Wazuh Dashboard 7 agents actifs</div><div class="ss-desc">https://10.10.20.50 > Agents — 7 agents actifs, FIM et IDS opérationnels, alertes de sécurité récentes</div>
+        <img src="../assets/img/wazuh-a11.png" alt="Capture A11 — Wazuh Dashboard 7 agents actifs" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
 
       <div class="alert al-ok"><span class="al-icon"><i class="fa-solid fa-check-circle"></i></span><span><strong>Résultat :</strong> 7/7 agents Zabbix actifs, 7/7 agents Wazuh actifs, FIM opérationnel sur tous les fichiers critiques, MTTD &lt; 5 min, tableaux de bord temps réel opérationnels.</span></div>
     </div>
@@ -714,9 +727,12 @@ DNS Domain          : ncc.local
 <span class="hl">Interfaces > Assignments > ovpns1 : activer et nommer</span></code></pre>
       </div>
 
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A4 — Serveur OpenVPN NCC-VPN-Acces-Distant</div><div class="ss-desc">pfSense > VPN > OpenVPN > Servers — mode SSL/TLS, UDP/1194, AES-256-GCM, tunnel 10.8.0.0/24</div></div>
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A5 — Statut OpenVPN service ovpns1 UP</div><div class="ss-desc">pfSense > Status > OpenVPN — NCC-VPN-Acces-Distant UP, UDP4:1194, interface ovpns1</div></div>
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A6 — Cert. Manager PKI NCC-VPN-CA</div><div class="ss-desc">pfSense > System > Cert. Manager — CA NCC-VPN-CA (RSA 2048, SHA256, 10 ans) + NCC-VPN-Server + NCC-VPN-Client</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A4 — Serveur OpenVPN NCC-VPN-Acces-Distant</div><div class="ss-desc">pfSense > VPN > OpenVPN > Servers — mode SSL/TLS, UDP/1194, AES-256-GCM, tunnel 10.8.0.0/24</div>
+        <img src="../assets/img/openvpn-a4.png" alt="Capture A4 — Serveur OpenVPN NCC-VPN-Acces-Distant" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A5 — Statut OpenVPN service ovpns1 UP</div><div class="ss-desc">pfSense > Status > OpenVPN — NCC-VPN-Acces-Distant UP, UDP4:1194, interface ovpns1</div>
+        <img src="../assets/img/openvpn-a5.png" alt="Capture A5 — Statut OpenVPN service ovpns1 UP" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A6 — Cert. Manager PKI NCC-VPN-CA</div><div class="ss-desc">pfSense > System > Cert. Manager — CA NCC-VPN-CA (RSA 2048, SHA256, 10 ans) + NCC-VPN-Server + NCC-VPN-Client</div>
+        <img src="../assets/img/openvpn-a6.png" alt="Capture A6 — Cert. Manager PKI NCC-VPN-CA" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
 
       <div class="alert al-ok"><span class="al-icon"><i class="fa-solid fa-check-circle"></i></span><span><strong>Résultat :</strong> VPN OpenVPN opérationnel, chiffrement AES-256-GCM actif, PKI NCC-VPN-CA fonctionnelle, accès distant validé depuis un poste extérieur.</span></div>
     </div>
@@ -764,7 +780,8 @@ DNS Domain          : ncc.local
           <tr><td class="tdb">Documentation DAT/DEX/DSR</td><td>DAT v1.0 + DEX + DSR + Plan IP livrés sur DFS \\ncc.local\Partages\Informatique</td><td><span class="badge bg">✓</span></td></tr>
         </tbody>
       </table>
-      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A12 — CLIENT-01 intégration domaine ncc.local</div><div class="ss-desc">CLIENT-01 > Panneau de configuration > Système > Nom de l'ordinateur — Domaine ncc.local confirmé</div></div>
+      <div class="screenshot-zone"><div class="ss-icon">📸</div><div class="ss-label">Capture A12 — CLIENT-01 intégration domaine ncc.local</div><div class="ss-desc">CLIENT-01 > Panneau de configuration > Système > Nom de l'ordinateur — Domaine ncc.local confirmé</div>
+        <img src="../assets/img/client-a12.png" alt="Capture A12 — CLIENT-01 intégration domaine ncc.local" style="width:100%;border-radius:8px;margin-top:14px;border:1px solid rgba(74,154,232,0.3);display:block;"></div>
     </div>
 
     <!-- RISQUES & PERSPECTIVES -->
