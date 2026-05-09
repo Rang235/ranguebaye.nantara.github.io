@@ -944,39 +944,30 @@
     <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Checklist de validation TP0</h4>
 
     <!-- IMAGE 1 : nslookup dc1.eris.local depuis DC1 -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_01</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M3 9h18M9 21V9"/>
-      </svg>
-      <div class="img-label">DC1 — nslookup dc1.eris.local<br>AD DS + DNS validé</div>
+      <img src="../assets/img/IMG_01.png" alt="DC1 — nslookup dc1.eris.local — AD DS + DNS validé" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">DC1 — nslookup dc1.eris.local<br>AD DS + DNS validé</div>
     </div>
 
     <!-- IMAGE 2 : Console AD avec DC1 et DC2 -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_02</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M3 9h18M9 21V9"/>
-      </svg>
-      <div class="img-label">Console AD — DC2 joint à la forêt eris.local<br>Domain Controllers (DC1 + DC2)</div>
+      <img src="../assets/img/IMG_02.png" alt="Console AD — DC2 joint à la forêt eris.local — Domain Controllers (DC1 + DC2)" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Console AD — DC2 joint à la forêt eris.local<br>Domain Controllers (DC1 + DC2)</div>
     </div>
 
     <!-- IMAGE 3 : ipconfig DNS pointant DC1/DC2 + nslookup eris.local -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_03</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">Clients Windows — ipconfig /all DNS 10.20.0.10/11<br>nslookup eris.local → 10.20.0.10 + 10.20.0.11</div>
+      <img src="../assets/img/IMG_03.png" alt="Clients Windows — ipconfig /all DNS 10.20.0.10/11 — nslookup eris.local → 10.20.0.10 + 10.20.0.11" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Clients Windows — ipconfig /all DNS 10.20.0.10/11<br>nslookup eris.local → 10.20.0.10 + 10.20.0.11</div>
     </div>
 
     <ul class="checklist">
@@ -1016,55 +1007,45 @@
     </p>
 
     <!-- IMAGE 4 : Gestionnaire de serveur AD DS sur DC1 -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_04</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M3 9h18M9 21V9"/>
-      </svg>
-      <div class="img-label">Étape A — Gestionnaire de serveur : AD DS actif sur DC1<br>IP 10.20.0.10 — Rôle AD DS installé et promu</div>
+      <img src="../assets/img/IMG_04.png" alt="Étape A — Gestionnaire de serveur : AD DS actif sur DC1 — IP 10.20.0.10 — Rôle AD DS installé et promu" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Étape A — Gestionnaire de serveur : AD DS actif sur DC1<br>IP 10.20.0.10 — Rôle AD DS installé et promu</div>
     </div>
 
     <!-- IMAGE 5 : DNS auxiliaire DC2 (prop TCP/IPv4) -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_05</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M3 9h18M9 21V9"/>
-      </svg>
-      <div class="img-label">Étape B — Ajout de DC2 comme DNS auxiliaire (10.20.0.11)<br>Propriétés TCP/IPv4 — Redondance DNS</div>
+      <img src="../assets/img/IMG_05.png" alt="Étape B — Ajout de DC2 comme DNS auxiliaire (10.20.0.11) — Propriétés TCP/IPv4 — Redondance DNS" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Étape B — Ajout de DC2 comme DNS auxiliaire (10.20.0.11)<br>Propriétés TCP/IPv4 — Redondance DNS</div>
     </div>
 
     <div class="divider"></div>
     <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Structure OU — Modèle entreprise ERIS-CORP</h4>
 
     <!-- IMAGE 6 : Console AD avec structure OU -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_06</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M3 3h6v6H3zM15 3h6v6h-6zM9 15h6v6H9zM3 15h6v6H3zM15 15h6v6h-6z"/>
-      </svg>
-      <div class="img-label">Étape C — Structure OU créée dans eris.local<br>Computers — APP2-SRV, BASTION-02, IDP1, NEXTCLOUD-SRV-A, SIEM, WIN-10</div>
+      <img src="../assets/img/IMG_06.png" alt="Étape C — Structure OU créée dans eris.local — Computers — APP2-SRV, BASTION-02, IDP1, NEXTCLOUD-SRV-A, SIEM, WIN-10" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Étape C — Structure OU créée dans eris.local<br>Computers — APP2-SRV, BASTION-02, IDP1, NEXTCLOUD-SRV-A, SIEM, WIN-10</div>
     </div>
 
     <div class="divider"></div>
     <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Étape D — Groupes RBAC (Rôles métiers)</h4>
 
     <!-- IMAGE 7 : Groupes RBAC dans la console AD -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_07</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-      </svg>
-      <div class="img-label">Étape D — Groupes de sécurité RBAC créés<br>GRP_All_Users, GRP_FIN, GRP_HR, GRP_IT_Admins, GRP_IT_Support_N1, GRP_IT_Support_N2</div>
+      <img src="../assets/img/IMG_07.png" alt="Étape D — Groupes de sécurité RBAC créés — GRP_All_Users, GRP_FIN, GRP_HR, GRP_IT_Admins, GRP_IT_Support_N1, GRP_IT_Support_N2" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Étape D — Groupes de sécurité RBAC créés<br>GRP_All_Users, GRP_FIN, GRP_HR, GRP_IT_Admins, GRP_IT_Support_N1, GRP_IT_Support_N2</div>
     </div>
 
     <table class="rbac-table">
@@ -1114,36 +1095,30 @@
     <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Étape E — Comptes utilisateurs (nominatifs, admins, services)</h4>
 
     <!-- IMAGE 8 : Utilisateurs nominatifs (alice durand, bob martin, charles bernard) -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_08</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
-      </svg>
-      <div class="img-label">Groupe des Utilisateurs Nominatifs<br>alice.durand / bob.martin / charles.bernard</div>
+      <img src="../assets/img/IMG_08.png" alt="Groupe des Utilisateurs Nominatifs — alice.durand / bob.martin / charles.bernard" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Groupe des Utilisateurs Nominatifs<br>alice.durand / bob.martin / charles.bernard</div>
     </div>
 
     <!-- IMAGE 9 : Groupe Administrateurs (admin alice) -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_09</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-      </svg>
-      <div class="img-label">Groupe des Administrateurs<br>admin.alice — OU=Admins</div>
+      <img src="../assets/img/IMG_09.png" alt="Groupe des Administrateurs — admin.alice — OU=Admins" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Groupe des Administrateurs<br>admin.alice — OU=Admins</div>
     </div>
 
     <!-- IMAGE 10 : Comptes de service (svc_app1, svc_ldap_bind) -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_10</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-      </svg>
-      <div class="img-label">Groupe des Comptes Services<br>svc_app1 / svc_ldap_bind — OU=ServiceAccounts</div>
+      <img src="../assets/img/IMG_10.png" alt="Groupe des Comptes Services — svc_app1 / svc_ldap_bind — OU=ServiceAccounts" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Groupe des Comptes Services<br>svc_app1 / svc_ldap_bind — OU=ServiceAccounts</div>
     </div>
 
     <div class="divider"></div>
@@ -1169,27 +1144,21 @@
     </div>
 
     <!-- IMAGE 11 : ldapsearch depuis APP1 (CAPTURE 1) -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_11</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">CAPTURE 1 — ldapsearch depuis APP1<br>Requête LDAP anonyme vers dc1.eris.local</div>
+      <img src="../assets/img/IMG_11.png" alt="CAPTURE 1 — ldapsearch depuis APP1 — Requête LDAP anonyme vers dc1.eris.local" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">CAPTURE 1 — ldapsearch depuis APP1<br>Requête LDAP anonyme vers dc1.eris.local</div>
     </div>
 
     <!-- IMAGE 12 : Compte svc_ldap_bind dans Keycloak CAPTURE 2 -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_12</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">CAPTURE 2 — Compte svc_ldap_bind créé<br>OU=ServiceAccounts — Droits lecture LDAP</div>
+      <img src="../assets/img/IMG_12.png" alt="CAPTURE 2 — Compte svc_ldap_bind créé — OU=ServiceAccounts — Droits lecture LDAP" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">CAPTURE 2 — Compte svc_ldap_bind créé<br>OU=ServiceAccounts — Droits lecture LDAP</div>
     </div>
 
     <div class="divider"></div>
@@ -1254,15 +1223,12 @@
     </div>
 
     <!-- IMAGE 13 : Installation Docker + reboot -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_13</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">Installation Docker Engine sur IDP1<br>sudo usermod -aG docker $USER — reboot</div>
+      <img src="../assets/img/IMG_13.png" alt="Installation Docker Engine sur IDP1 — sudo usermod -aG docker $USER — reboot" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Installation Docker Engine sur IDP1<br>sudo usermod -aG docker $USER — reboot</div>
     </div>
 
     <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin:28px 0 16px;">Configuration docker-compose.yml — Keycloak + PostgreSQL</h4>
@@ -1298,27 +1264,21 @@
     </div>
 
     <!-- IMAGE 14 : docker compose up -d + conteneurs Up -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_14</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">docker compose up -d — Pull Keycloak 25.0 + PostgreSQL 16<br>Conteneurs keycloak-keycloak-1 et keycloak-db-1 : Up</div>
+      <img src="../assets/img/IMG_14.png" alt="docker compose up -d — Pull Keycloak 25.0 + PostgreSQL 16 — Conteneurs keycloak-keycloak-1 et keycloak-db-1 : Up" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">docker compose up -d — Pull Keycloak 25.0 + PostgreSQL 16<br>Conteneurs keycloak-keycloak-1 et keycloak-db-1 : Up</div>
     </div>
 
     <!-- IMAGE 15 : Interface Keycloak HTTP accessible depuis W11-01 -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_15</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-      </svg>
-      <div class="img-label">Keycloak accessible sur http://idp1.eris.local:8080<br>Page de connexion Sign in — depuis W11-01</div>
+      <img src="../assets/img/IMG_15.png" alt="Keycloak accessible sur http://idp1.eris.local:8080 — Page de connexion Sign in — depuis W11-01" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Keycloak accessible sur http://idp1.eris.local:8080<br>Page de connexion Sign in — depuis W11-01</div>
     </div>
 
     <div class="divider"></div>
@@ -1334,15 +1294,12 @@
     </div>
 
     <!-- IMAGE 16 : Keycloak HTTPS console admin depuis W11-01 -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_16</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-      </svg>
-      <div class="img-label">Keycloak activé en HTTPS — Console admin master realm<br>https://idp1.eris.local — Nginx reverse proxy</div>
+      <img src="../assets/img/IMG_16.png" alt="Keycloak activé en HTTPS — Console admin master realm — https://idp1.eris.local — Nginx reverse proxy" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Keycloak activé en HTTPS — Console admin master realm<br>https://idp1.eris.local — Nginx reverse proxy</div>
     </div>
 
     <div class="divider"></div>
@@ -1364,26 +1321,21 @@
     </div>
 
     <!-- IMAGE 17 : Config LDAP Keycloak (connexion réussie) -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_17</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M3 9h18M9 21V9"/>
-      </svg>
-      <div class="img-label">Configuration LDAP Keycloak — Test connection OK<br>Successfully connected to LDAP — Realm ERIS</div>
+      <img src="../assets/img/IMG_17.png" alt="Configuration LDAP Keycloak — Test connection OK — Successfully connected to LDAP — Realm ERIS" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Configuration LDAP Keycloak — Test connection OK<br>Successfully connected to LDAP — Realm ERIS</div>
     </div>
 
     <!-- IMAGE 18 : Synchronisation users AD dans Keycloak (alice.durand, bob.martin, etc.) -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_18</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-      </svg>
-      <div class="img-label">Synchronisation Keycloak — 5 users importés depuis AD<br>admin.alice / alice.durand / bob.martin / charles.bernard / svc.app1</div>
+      <img src="../assets/img/IMG_18.png" alt="Synchronisation Keycloak — 5 users importés depuis AD — admin.alice / alice.durand / bob.martin / charles.bernard / svc.app1" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Synchronisation Keycloak — 5 users importés depuis AD<br>admin.alice / alice.durand / bob.martin / charles.bernard / svc.app1</div>
     </div>
 
     <div class="divider"></div>
@@ -1397,54 +1349,42 @@
     </ul>
 
     <!-- IMAGE 19 : QR Code MFA setup + flow Browser-ERIS -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_19</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/>
-      </svg>
-      <div class="img-label">MFA Setup — QR Code alice.durand<br>Flow Browser-ERIS — OTP Form Required — Code TOTP 062 791</div>
+      <img src="../assets/img/IMG_19.png" alt="MFA Setup — QR Code alice.durand — Flow Browser-ERIS — OTP Form Required — Code TOTP 062 791" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">MFA Setup — QR Code alice.durand<br>Flow Browser-ERIS — OTP Form Required — Code TOTP 062 791</div>
     </div>
 
     <!-- IMAGE 20 : alice.durand connectée au compte ERIS avec MFA -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_20</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-      </svg>
-      <div class="img-label">alice.durand — Accès validé au Realm ERIS<br>Personal Info — MFA TOTP activé</div>
+      <img src="../assets/img/IMG_20.png" alt="alice.durand — Accès validé au Realm ERIS — Personal Info — MFA TOTP activé" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">alice.durand — Accès validé au Realm ERIS<br>Personal Info — MFA TOTP activé</div>
     </div>
 
     <div class="divider"></div>
     <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Étape G — Protection APP1 par OIDC (oauth2-proxy)</h4>
 
     <!-- IMAGE 21 : APP1 Nginx installé + page protégée -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_21</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">CAPTURE — APP1 nginx installé<br>curl -I http://app1.eris.local → HTTP/1.1 200 OK depuis IDP1</div>
+      <img src="../assets/img/IMG_21.png" alt="CAPTURE — APP1 nginx installé — curl -I http://app1.eris.local → HTTP/1.1 200 OK depuis IDP1" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">CAPTURE — APP1 nginx installé<br>curl -I http://app1.eris.local → HTTP/1.1 200 OK depuis IDP1</div>
     </div>
 
     <!-- IMAGE 22 : Redirection OAuth2 Proxy → Keycloak ERIS -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_22</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-      </svg>
-      <div class="img-label">Redirection OAuth2 Proxy → Sign in with OpenID Connect<br>Puis redirection vers Keycloak ERIS — idp1.eris.local</div>
+      <img src="../assets/img/IMG_22.png" alt="Redirection OAuth2 Proxy → Sign in with OpenID Connect — Puis redirection vers Keycloak ERIS — idp1.eris.local" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Redirection OAuth2 Proxy → Sign in with OpenID Connect<br>Puis redirection vers Keycloak ERIS — idp1.eris.local</div>
     </div>
 
   </div>
@@ -1508,15 +1448,12 @@
     </div>
 
     <!-- IMAGE 23 : Commande curl openid-configuration depuis W11-01 -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_23</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">Partie A — curl openid-configuration<br>Endpoints OIDC Discovery — Realm ERIS</div>
+      <img src="../assets/img/IMG_23.png" alt="Partie A — curl openid-configuration — Endpoints OIDC Discovery — Realm ERIS" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Partie A — curl openid-configuration<br>Endpoints OIDC Discovery — Realm ERIS</div>
     </div>
 
     <div class="divider"></div>
@@ -1531,53 +1468,42 @@
     </div>
 
     <!-- IMAGE 24 : SimpleSAMLphp page web accessible depuis W11-01 (CAPTURE) -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_24</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-      </svg>
-      <div class="img-label">CAPTURE — APP2 : http://app2.eris.local<br>Page SimpleSAMLphp accessible — Nginx + PHP-FPM</div>
+      <img src="../assets/img/IMG_24.png" alt="CAPTURE — APP2 : http://app2.eris.local — Page SimpleSAMLphp accessible — Nginx + PHP-FPM" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">CAPTURE — APP2 : http://app2.eris.local<br>Page SimpleSAMLphp accessible — Nginx + PHP-FPM</div>
     </div>
 
     <div class="divider"></div>
     <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Partie C — Client OIDC app1-oidc dans Keycloak</h4>
 
     <!-- IMAGE 25 : Client app1-oidc dans Keycloak (paramètres) -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_25</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M3 9h18M9 21V9"/>
-      </svg>
-      <div class="img-label">Keycloak — Client app1-oidc (OpenID Connect)<br>Valid redirect URIs + Web origins app1.eris.local</div>
+      <img src="../assets/img/IMG_25.png" alt="Keycloak — Client app1-oidc (OpenID Connect) — Valid redirect URIs + Web origins app1.eris.local" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Keycloak — Client app1-oidc (OpenID Connect)<br>Valid redirect URIs + Web origins app1.eris.local</div>
     </div>
 
     <!-- IMAGE 26 : Client Secret app1-oidc (Credentials) -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_26</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-      </svg>
-      <div class="img-label">CAPTURE 1 — Client Secret app1-oidc<br>SAML — Métadonnées SP exportées</div>
+      <img src="../assets/img/IMG_26.png" alt="CAPTURE 1 — Client Secret app1-oidc — SAML — Métadonnées SP exportées" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">CAPTURE 1 — Client Secret app1-oidc<br>SAML — Métadonnées SP exportées</div>
     </div>
 
     <!-- IMAGE 27 : SAML IdP Metadata Keycloak / SimpleSAMLphp CAPTURE 2 -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_27</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-      </svg>
-      <div class="img-label">CAPTURE 2 — Métadonnées IdP Keycloak importées dans SimpleSAMLphp<br>saml20-idp-remote.php — Échange métadonnées SAML</div>
+      <img src="../assets/img/IMG_27.png" alt="CAPTURE 2 — Métadonnées IdP Keycloak importées dans SimpleSAMLphp — saml20-idp-remote.php — Échange métadonnées SAML" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">CAPTURE 2 — Métadonnées IdP Keycloak importées dans SimpleSAMLphp<br>saml20-idp-remote.php — Échange métadonnées SAML</div>
     </div>
 
     <div class="divider"></div>
@@ -1786,15 +1712,12 @@
     <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Déploiement VM Bastion — Ubuntu Server 22.04</h4>
 
     <!-- IMAGE 28 : VM Bastion login interface Ubuntu -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_28</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">Capture — BASTION VM démarrée<br>Ubuntu 22.04 LTS — bastion login interface</div>
+      <img src="../assets/img/IMG_28.png" alt="Capture — BASTION VM démarrée — Ubuntu 22.04 LTS — bastion login interface" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Capture — BASTION VM démarrée<br>Ubuntu 22.04 LTS — bastion login interface</div>
     </div>
 
     <div class="code-block">
@@ -1811,39 +1734,30 @@
     </div>
 
     <!-- IMAGE 29 : ip a BASTION 10.20.0.30 -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_29</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">ip a — BASTION ens33 : 10.20.0.30/24<br>Configuration réseau appliquée</div>
+      <img src="../assets/img/IMG_29.png" alt="ip a — BASTION ens33 : 10.20.0.30/24 — Configuration réseau appliquée" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">ip a — BASTION ens33 : 10.20.0.30/24<br>Configuration réseau appliquée</div>
     </div>
 
     <!-- IMAGE 30 : ping 10.20.0.3 depuis BASTION -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_30</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">Vérification — ping 10.20.0.3 OK<br>nslookup dc1.eris.local → 10.20.0.10</div>
+      <img src="../assets/img/IMG_30.png" alt="Vérification — ping 10.20.0.3 OK — nslookup dc1.eris.local → 10.20.0.10" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Vérification — ping 10.20.0.3 OK<br>nslookup dc1.eris.local → 10.20.0.10</div>
     </div>
 
     <!-- IMAGE 31 : nslookup dc1.eris.local depuis BASTION -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_31</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">nslookup dc1.eris.local depuis BASTION<br>Non-authoritative answer : 10.20.0.10</div>
+      <img src="../assets/img/IMG_31.png" alt="nslookup dc1.eris.local depuis BASTION — Non-authoritative answer : 10.20.0.10" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">nslookup dc1.eris.local depuis BASTION<br>Non-authoritative answer : 10.20.0.10</div>
     </div>
 
     <div class="divider"></div>
@@ -1863,33 +1777,28 @@ PermitEmptyPasswords no</pre>
     </div>
 
     <!-- IMAGE 32 : SSH config sshd_config nano + bastion login depuis W11-01 -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_32</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-      </svg>
-      <div class="img-label">sshd_config durci — PubkeyAuthentication yes<br>Test SSH depuis W11-01 : ssh bastion@10.20.0.30</div>
+      <img src="../assets/img/IMG_32.png" alt="sshd_config durci — PubkeyAuthentication yes — Test SSH depuis W11-01 : ssh bastion@10.20.0.30" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">sshd_config durci — PubkeyAuthentication yes<br>Test SSH depuis W11-01 : ssh bastion@10.20.0.30</div>
     </div>
 
     <!-- IMAGE 33 : auditd installé + systemctl enable --now auditd -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_33</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">auditd installé + activé<br>systemctl status auditd — Active (running)</div>
+      <img src="../assets/img/IMG_33.png" alt="auditd installé + activé — systemctl status auditd — Active (running)" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">auditd installé + activé<br>systemctl status auditd — Active (running)</div>
     </div>
 
     <div class="divider"></div>
     <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Séparation des privilèges + Groupe pam-admins</h4>
 
     <div class="code-block">
-      <div class="code-label">BASTION - Compte alice.bastion + groupe pam-admins</div>
+      <div class="code-label">BASTION — Compte alice.bastion + groupe pam-admins</div>
       <pre><span class="cmd">sudo adduser --force-badname alice.bastion</span>
 <span class="cmd">sudo groupadd pam-admins</span>
 <span class="comment"># Autoriser sudo uniquement au groupe pam-admins</span>
@@ -1899,26 +1808,21 @@ PermitEmptyPasswords no</pre>
     </div>
 
     <!-- IMAGE 34 : adduser alice.bastion + getent group pam-admins -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_34</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
-      </svg>
-      <div class="img-label">alice.bastion créé — getent group pam-admins<br>sudoers.d/pam-admins — visudo -c : parsed OK</div>
+      <img src="../assets/img/IMG_34.png" alt="alice.bastion créé — getent group pam-admins — sudoers.d/pam-admins — visudo -c : parsed OK" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">alice.bastion créé — getent group pam-admins<br>sudoers.d/pam-admins — visudo -c : parsed OK</div>
     </div>
 
     <!-- IMAGE 35 : sudoers pam-admins vim + visudo -c parsé OK -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_35</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-      </svg>
-      <div class="img-label">%pam-admins ALL=(ALL) ALL<br>/etc/sudoers.d/pam-admins — Syntaxe validée</div>
+      <img src="../assets/img/IMG_35.png" alt="%pam-admins ALL=(ALL) ALL — /etc/sudoers.d/pam-admins — Syntaxe validée" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">%pam-admins ALL=(ALL) ALL<br>/etc/sudoers.d/pam-admins — Syntaxe validée</div>
     </div>
 
     <div class="divider"></div>
@@ -1943,15 +1847,12 @@ PermitEmptyPasswords no</pre>
     </div>
 
     <!-- IMAGE 36 : sudo -l avant JIT refusé, pendant JIT (ALL) ALL, après JIT refusé -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_36</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-      </svg>
-      <div class="img-label">Capture JIT — sudo -l avant (refusé) / pendant (ALL) / après (refusé)<br>usermod + gpasswd -d alice.bastion pam-admins</div>
+      <img src="../assets/img/IMG_36.png" alt="Capture JIT — sudo -l avant (refusé) / pendant (ALL) / après (refusé) — usermod + gpasswd -d alice.bastion pam-admins" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Capture JIT — sudo -l avant (refusé) / pendant (ALL) / après (refusé)<br>usermod + gpasswd -d alice.bastion pam-admins</div>
     </div>
 
     <div class="divider"></div>
@@ -1969,27 +1870,21 @@ PermitEmptyPasswords no</pre>
     </div>
 
     <!-- IMAGE 37 : Logs auth.log SSH + sudo -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_37</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-      </svg>
-      <div class="img-label">Logs SSH — /var/log/auth.log<br>Sessions SSH + sudo tracés — pam_unix, sshd, sudo</div>
+      <img src="../assets/img/IMG_37.png" alt="Logs SSH — /var/log/auth.log — Sessions SSH + sudo tracés — pam_unix, sshd, sudo" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">Logs SSH — /var/log/auth.log<br>Sessions SSH + sudo tracés — pam_unix, sshd, sudo</div>
     </div>
 
     <!-- IMAGE 38 : auditctl + ausearch sudo-commands -->
-    <div class="img-slot">
+    <div class="img-slot" style="min-height:auto;padding:12px;">
       <div class="img-num">IMG_38</div>
       <div class="img-corner tl"></div><div class="img-corner tr"></div>
       <div class="img-corner bl"></div><div class="img-corner br"></div>
-      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-      </svg>
-      <div class="img-label">auditctl -w /usr/bin/sudo + ausearch -k sudo-commands<br>Règles auditd chargées — Événements sudo tracés</div>
+      <img src="../assets/img/IMG_38.png" alt="auditctl -w /usr/bin/sudo + ausearch -k sudo-commands — Règles auditd chargées — Événements sudo tracés" style="max-width:100%;display:block;margin:0 auto;">
+      <div class="img-label" style="margin-top:10px;">auditctl -w /usr/bin/sudo + ausearch -k sudo-commands<br>Règles auditd chargées — Événements sudo tracés</div>
     </div>
 
     <div class="divider"></div>
@@ -2060,8 +1955,8 @@ PermitEmptyPasswords no</pre>
 
       <div style="display:contents;">
         <div class="info-card green">
-          <div class="info-card-label">Parcours 1 - Joiner</div>
-          <div class="info-card-title">david.kone - Arrivée</div>
+          <div class="info-card-label">Parcours 1 — Joiner</div>
+          <div class="info-card-title">david.kone — Arrivée</div>
           <div class="info-card-body">Création compte AD, affectation GRP_All_Users, connexion APP1 via SSO + MFA — 3 captures prévues</div>
         </div>
 
@@ -2110,7 +2005,7 @@ PermitEmptyPasswords no</pre>
 <footer class="footer">
   <div class="container">
     <div class="footer-logo">ERIS-CORP</div>
-    <p class="footer-sub">Module ERIS - Gestion des Identités et des Accès · IMIE Paris / Groupe 3iL · Formateur Paul ZOKOU</p>
+    <p class="footer-sub">Module ERIS — Gestion des Identités et des Accès · IMIE Paris / Groupe 3iL · Formateur Paul ZOKOU</p>
     <p style="font-size:10px;color:var(--text3);margin-top:12px;letter-spacing:1px;">Ranguebaye NANTARA · Mastère Expert Réseaux, Infrastructures &amp; Sécurité</p>
   </div>
 </footer>
