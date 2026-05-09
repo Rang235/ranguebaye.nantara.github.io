@@ -1,120 +1,2119 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ERIS-CORP — Architecture IAM & Bastion Linux — Ranguebaye Nantara</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="../assets/css/style.css"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projet ERIS-CORP – Gestion des Identités et des Accès</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #070d14;
+    --bg2: #0b1520;
+    --bg3: #0f1e2e;
+    --border: #1a3a5c;
+    --border2: #0e2a44;
+    --accent: #00c8ff;
+    --accent2: #0080b3;
+    --accent3: #00ffa3;
+    --warn: #ff6b35;
+    --text: #c8dff0;
+    --text2: #7aa8cc;
+    --text3: #3d6a8a;
+    --white: #e8f4ff;
+    --green: #00ffa3;
+    --red: #ff4060;
+    --gold: #f0b429;
+    --mono: 'IBM Plex Mono', monospace;
+    --head: 'Rajdhani', sans-serif;
+    --code: 'Share Tech Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Scan lines overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,200,255,0.015) 2px, rgba(0,200,255,0.015) 4px);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 40px;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,200,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridPulse 8s ease-in-out infinite;
+  }
+
+  @keyframes gridPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,200,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.1); opacity: 1; }
+  }
+
+  .hero-badge {
+    position: relative;
+    display: inline-block;
+    background: rgba(0,200,255,0.1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--code);
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 6px 20px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+
+  .hero-badge::before, .hero-badge::after {
+    content: '//';
+    margin: 0 8px;
+    opacity: 0.5;
+  }
+
+  .hero-title {
+    position: relative;
+    font-family: var(--head);
+    font-size: clamp(32px, 6vw, 72px);
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 2px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .hero-title span {
+    color: var(--accent);
+    text-shadow: 0 0 30px rgba(0,200,255,0.5);
+  }
+
+  .hero-subtitle {
+    position: relative;
+    font-family: var(--head);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text2);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+  }
+
+  .hero-meta {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 700px;
+    width: 100%;
+  }
+
+  .meta-item {
+    background: rgba(0,200,255,0.05);
+    border: 1px solid var(--border);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .meta-value {
+    font-family: var(--head);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .hero-team {
+    position: relative;
+    margin-top: 40px;
+    background: rgba(0,128,179,0.1);
+    border: 1px solid var(--border);
+    padding: 24px 40px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .team-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .team-members {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .member {
+    font-family: var(--head);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text2);
+    background: rgba(0,200,255,0.05);
+    border: 1px solid var(--border2);
+    padding: 4px 12px;
+  }
+
+  .member.highlight {
+    color: var(--accent3);
+    border-color: rgba(0,255,163,0.3);
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .section-num {
+    font-family: var(--code);
+    font-size: 11px;
+    color: var(--accent);
+    opacity: 0.6;
+    min-width: 40px;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+  }
+
+  .section-title {
+    font-family: var(--head);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  .section-title .accent { color: var(--accent); }
+
+  /* ── TP BLOCK ── */
+  .tp-block {
+    margin-bottom: 64px;
+  }
+
+  .tp-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tp-tag {
+    font-family: var(--code);
+    font-size: 10px;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 4px 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    flex-shrink: 0;
+  }
+
+  .tp-tag.green { background: var(--green); }
+  .tp-tag.gold { background: var(--gold); }
+  .tp-tag.warn { background: var(--warn); }
+  .tp-tag.red { background: var(--red); }
+
+  .tp-title {
+    font-family: var(--head);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── INFO GRID ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .info-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .info-grid.four { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .info-grid.one { grid-template-columns: 1fr; }
+
+  .info-card {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .info-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+  }
+
+  .info-card.green::before { background: var(--green); }
+  .info-card.gold::before { background: var(--gold); }
+  .info-card.warn::before { background: var(--warn); }
+  .info-card.red::before { background: var(--red); }
+
+  .info-card-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .info-card-title {
+    font-family: var(--head);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .info-card-body {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* ── PROSE ── */
+  .prose {
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .prose strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .prose .highlight {
+    color: var(--accent3);
+  }
+
+  /* ── IP TABLE ── */
+  .ip-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    font-size: 12px;
+  }
+
+  .ip-table th {
+    background: rgba(0,200,255,0.1);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-family: var(--head);
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 10px 16px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .ip-table td {
+    border: 1px solid var(--border2);
+    padding: 10px 16px;
+    color: var(--text2);
+  }
+
+  .ip-table tr:hover td {
+    background: rgba(0,200,255,0.03);
+    color: var(--text);
+  }
+
+  .ip-table .mono { font-family: var(--code); color: var(--accent3); }
+  .ip-table .role { color: var(--gold); font-family: var(--head); font-weight: 600; }
+
+  /* ── CODE BLOCK ── */
+  .code-block {
+    background: #030810;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    position: relative;
+  }
+
+  .code-block .code-label {
+    position: absolute;
+    top: 8px; right: 12px;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .code-block pre {
+    font-family: var(--code);
+    font-size: 12px;
+    color: var(--accent3);
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+
+  .code-block pre .cmd { color: var(--accent); }
+  .code-block pre .comment { color: var(--text3); }
+  .code-block pre .string { color: var(--gold); }
+  .code-block pre .key { color: var(--warn); }
+
+  /* ── IMAGE SLOT ── */
+  .img-slot {
+    background: var(--bg2);
+    border: 1px dashed var(--border);
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 24px 0;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+
+  .img-slot:hover { border-color: var(--accent); }
+
+  .img-slot .img-corner {
+    position: absolute;
+    width: 16px; height: 16px;
+    border-color: var(--accent);
+    border-style: solid;
+    opacity: 0.4;
+  }
+
+  .img-slot .img-corner.tl { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+  .img-slot .img-corner.tr { top: 8px; right: 8px; border-width: 1px 1px 0 0; }
+  .img-slot .img-corner.bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
+  .img-slot .img-corner.br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+
+  .img-slot .img-icon {
+    width: 44px; height: 44px;
+    opacity: 0.2;
+  }
+
+  .img-slot .img-label {
+    font-family: var(--code);
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  .img-slot .img-num {
+    position: absolute;
+    top: 12px; left: 12px;
+    font-family: var(--code);
+    font-size: 10px;
+    color: var(--accent);
+    opacity: 0.5;
+  }
+
+  .img-slot img {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* ── STEP LIST ── */
+  .step-list {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .step-list li {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border2);
+    align-items: flex-start;
+  }
+
+  .step-num {
+    font-family: var(--code);
+    font-size: 11px;
+    color: var(--accent);
+    min-width: 28px;
+    margin-top: 2px;
+  }
+
+  .step-body {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .step-body strong { color: var(--white); }
+  .step-body code {
+    font-family: var(--code);
+    color: var(--accent3);
+    background: rgba(0,255,163,0.06);
+    padding: 1px 6px;
+    font-size: 11px;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  .check-icon {
+    font-size: 14px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+
+  .check-icon.ok { color: var(--green); }
+  .check-icon.warn { color: var(--warn); }
+  .check-icon.info { color: var(--accent); }
+
+  /* ── RBAC TABLE ── */
+  .rbac-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    font-size: 12px;
+  }
+
+  .rbac-table th {
+    background: rgba(240,180,41,0.1);
+    border: 1px solid rgba(240,180,41,0.2);
+    color: var(--gold);
+    font-family: var(--head);
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 10px 16px;
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  .rbac-table td {
+    border: 1px solid var(--border2);
+    padding: 10px 16px;
+    color: var(--text2);
+  }
+
+  .rbac-table tr:hover td { background: rgba(240,180,41,0.03); }
+  .rbac-table .tag {
+    display: inline-block;
+    background: rgba(0,200,255,0.1);
+    border: 1px solid rgba(0,200,255,0.2);
+    color: var(--accent);
+    font-size: 10px;
+    padding: 2px 8px;
+    margin: 2px;
+    letter-spacing: 1px;
+  }
+
+  /* ── ARCH DIAGRAM ── */
+  .arch-diagram {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 40px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .arch-nodes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .arch-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .arch-node {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    text-align: center;
+    min-width: 160px;
+    position: relative;
+  }
+
+  .arch-node.primary { border-color: var(--accent); }
+  .arch-node.secondary { border-color: var(--green); }
+  .arch-node.tertiary { border-color: var(--gold); }
+
+  .arch-node-title {
+    font-family: var(--head);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .arch-node-ip {
+    font-family: var(--code);
+    font-size: 10px;
+    color: var(--accent3);
+  }
+
+  .arch-node-role {
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  .arch-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .arch-arrow-line {
+    width: 1px;
+    height: 32px;
+    background: var(--accent);
+    opacity: 0.4;
+    position: relative;
+  }
+
+  .arch-arrow-label {
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .arch-h-arrows {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .arch-h-line {
+    height: 1px;
+    width: 40px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 40px 0;
+  }
+
+  /* ── ANSWER BLOCK ── */
+  .answer-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--green);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+
+  .answer-q {
+    font-family: var(--head);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .answer-a {
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.8;
+  }
+
+  /* ── STATUS BADGES ── */
+  .badge {
+    display: inline-block;
+    font-family: var(--code);
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    text-transform: uppercase;
+    margin: 2px;
+  }
+
+  .badge.ok { background: rgba(0,255,163,0.1); border: 1px solid rgba(0,255,163,0.3); color: var(--green); }
+  .badge.warn { background: rgba(255,107,53,0.1); border: 1px solid rgba(255,107,53,0.3); color: var(--warn); }
+  .badge.info { background: rgba(0,200,255,0.1); border: 1px solid rgba(0,200,255,0.3); color: var(--accent); }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 60px 0;
+    text-align: center;
+    border-top: 1px solid var(--border2);
+  }
+
+  .footer-logo {
+    font-family: var(--head);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    text-shadow: 0 0 20px rgba(0,200,255,0.3);
+  }
+
+  .footer-sub {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 2px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .info-grid.three { grid-template-columns: 1fr; }
+    .info-grid.four { grid-template-columns: 1fr 1fr; }
+    .hero-meta { grid-template-columns: 1fr; }
+    .container { padding: 0 20px; }
+    .hero { padding: 60px 20px; }
+  }
+</style>
 </head>
 <body>
 
-<!-- ══ NAV ══════════════════════════════════════ -->
-<nav class="nav">
-  <div class="container">
-    <a href="../index.html" class="nav-logo">RN · Portfolio</a>
-    <ul class="nav-links">
-      <li><a href="../index.html#competences">Compétences</a></li>
-      <li><a href="../index.html#experience">Expérience</a></li>
-      <li><a href="../index.html#projets">Projets</a></li>
-      <li><a href="../index.html#certifications">Certifications</a></li>
-      <li><a href="../index.html#contact">Contact</a></li>
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-badge">Module ERIS — IMIE Paris / Groupe 3iL</div>
+
+  <h1 class="hero-title">
+    TP <span>Gestion des Identités</span><br>et des Accès
+  </h1>
+
+  <p class="hero-subtitle">IAM — Infrastructure ERIS-CORP</p>
+
+  <div class="hero-meta">
+    <div class="meta-item">
+      <div class="meta-label">Domaine</div>
+      <div class="meta-value">eris.local</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Réseau LAN</div>
+      <div class="meta-value">10.20.0.0/24</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Hyperviseur</div>
+      <div class="meta-value">VMware 17.5</div>
+    </div>
+  </div>
+
+  <div class="hero-team">
+    <div class="team-title">// Groupe 3 — Formateur Paul ZOKOU</div>
+    <div class="team-members">
+      <span class="member">Mamadou DIALLO</span>
+      <span class="member highlight">Ranguebaye NANTARA</span>
+      <span class="member">Rayanne FOTSING</span>
+      <span class="member">Alan LOREDON</span>
+      <span class="member">Ange-Killian TCHANA</span>
+      <span class="member">Ibrahim DICKO</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MAIN CONTENT ══ -->
+<main>
+
+<!-- ─── TP0 : SOCLE LAB ─── -->
+<section class="section">
+<div class="container">
+
+  <div class="section-header">
+    <span class="section-num">TP0</span>
+    <h2 class="section-title">Socle Lab IAM — <span class="accent">Infrastructure Commune</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tp-block">
+    <div class="tp-header">
+      <span class="tp-tag">Objectifs</span>
+      <h3 class="tp-title">Mise en place du laboratoire</h3>
+    </div>
+
+    <p class="prose">
+      Ce TP0 établit le <strong>socle technique commun</strong> à tous les TP du module (Chapitres 2 à 7).
+      Il définit précisément les machines virtuelles, les systèmes d'exploitation, les logiciels/services à installer,
+      la topologie de l'infrastructure, le plan d'adressage IP et les dépendances fonctionnelles entre composants.
+    </p>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Plan d'adressage — LAN-ERIS (10.20.0.0/24)</h4>
+
+    <table class="ip-table">
+      <thead>
+        <tr>
+          <th>Rôle</th>
+          <th>Nom VM</th>
+          <th>OS</th>
+          <th>Adresse IP</th>
+          <th>DNS</th>
+          <th>Services</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="role">Contrôleur de domaine</td>
+          <td class="mono">DC1</td>
+          <td>Windows Server 2022</td>
+          <td class="mono">10.20.0.10</td>
+          <td class="mono">10.20.0.10</td>
+          <td>AD DS + DNS + NTP</td>
+        </tr>
+        <tr>
+          <td class="role">Contrôleur de domaine</td>
+          <td class="mono">DC2</td>
+          <td>Windows Server 2022</td>
+          <td class="mono">10.20.0.11</td>
+          <td class="mono">10.20.0.10</td>
+          <td>AD DS + DNS (secours)</td>
+        </tr>
+        <tr>
+          <td class="role">Console / Gestion</td>
+          <td class="mono">MGMT</td>
+          <td>Windows 11</td>
+          <td class="mono">10.20.0.20</td>
+          <td class="mono">10.20.0.10</td>
+          <td>RSAT + navigateurs + outils</td>
+        </tr>
+        <tr>
+          <td class="role">Client</td>
+          <td class="mono">W11-01</td>
+          <td>Windows 11</td>
+          <td class="mono">10.20.0.21</td>
+          <td class="mono">10.20.0.10</td>
+          <td>Poste joint au domaine</td>
+        </tr>
+        <tr>
+          <td class="role">Bastion PAM</td>
+          <td class="mono">BASTION</td>
+          <td>Ubuntu Server 22.04</td>
+          <td class="mono">10.20.0.30</td>
+          <td class="mono">10.20.0.10</td>
+          <td>SSH + outils PAM</td>
+        </tr>
+        <tr>
+          <td class="role">App interne</td>
+          <td class="mono">APP1</td>
+          <td>Ubuntu Server 22.04</td>
+          <td class="mono">10.20.0.40</td>
+          <td class="mono">10.20.0.10</td>
+          <td>Nextcloud / Gitea</td>
+        </tr>
+        <tr>
+          <td class="role">IdP SSO</td>
+          <td class="mono">IDP1</td>
+          <td>Ubuntu Server 22.04</td>
+          <td class="mono">10.20.0.50</td>
+          <td class="mono">10.20.0.10</td>
+          <td>Keycloak (OIDC/SAML)</td>
+        </tr>
+        <tr>
+          <td class="role">Journalisation</td>
+          <td class="mono">SIEM1</td>
+          <td>Ubuntu Server 22.04</td>
+          <td class="mono">10.20.0.60</td>
+          <td class="mono">10.20.0.10</td>
+          <td>Wazuh / ELK (optionnel)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-grid three">
+      <div class="info-card">
+        <div class="info-card-label">Passerelle (GW)</div>
+        <div class="info-card-title" style="font-family:var(--code);color:var(--accent3);">10.20.0.1</div>
+        <div class="info-card-body">Routeur virtuel NAT de l'hyperviseur VMware Workstation Pro 17.5</div>
+      </div>
+      <div class="info-card green">
+        <div class="info-card-label">DNS Principal</div>
+        <div class="info-card-title" style="font-family:var(--code);color:var(--green);">DC1 — 10.20.0.10</div>
+        <div class="info-card-body">Résolution interne eris.local — AD DS intégré</div>
+      </div>
+      <div class="info-card gold">
+        <div class="info-card-label">NTP / Synchronisation</div>
+        <div class="info-card-title" style="font-family:var(--code);color:var(--gold);">DC1 ou pool NTP ext.</div>
+        <div class="info-card-body">Écart max toléré : &lt; 2 min (exigence Kerberos)</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Checklist de validation TP0</h4>
+
+    <!-- IMAGE 1 : nslookup dc1.eris.local depuis DC1 -->
+    <div class="img-slot">
+      <div class="img-num">IMG_01</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M3 9h18M9 21V9"/>
+      </svg>
+      <div class="img-label">DC1 — nslookup dc1.eris.local<br>AD DS + DNS validé</div>
+    </div>
+
+    <!-- IMAGE 2 : Console AD avec DC1 et DC2 -->
+    <div class="img-slot">
+      <div class="img-num">IMG_02</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M3 9h18M9 21V9"/>
+      </svg>
+      <div class="img-label">Console AD — DC2 joint à la forêt eris.local<br>Domain Controllers (DC1 + DC2)</div>
+    </div>
+
+    <!-- IMAGE 3 : ipconfig DNS pointant DC1/DC2 + nslookup eris.local -->
+    <div class="img-slot">
+      <div class="img-num">IMG_03</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">Clients Windows — ipconfig /all DNS 10.20.0.10/11<br>nslookup eris.local → 10.20.0.10 + 10.20.0.11</div>
+    </div>
+
+    <ul class="checklist">
+      <li><span class="check-icon ok">✔</span> Toutes les VM démarrent et sont joignables (ping) sur 10.20.0.0/24</li>
+      <li><span class="check-icon ok">✔</span> DC1 : AD DS + DNS installés — dc1.eris.local résout correctement</li>
+      <li><span class="check-icon ok">✔</span> DC2 : rejoint la forêt/domaine eris.local en tant que DC secondaire</li>
+      <li><span class="check-icon ok">✔</span> Clients Windows : DNS pointant vers DC1/DC2 — jointure domaine possible</li>
+      <li><span class="check-icon info">◈</span> Ubuntu : résolution DNS OK (nslookup dc1.eris.local) — capture requise</li>
+      <li><span class="check-icon ok">✔</span> Synchronisation de temps : horloge cohérente entre clients et DC (écart &lt; 2 min)</li>
     </ul>
-    <div class="nav-burger" id="burger"><span></span><span></span><span></span></div>
-  </div>
-  <div class="nav-mobile" id="nav-mobile">
-    <a href="../index.html#competences">Compétences</a>
-    <a href="../index.html#experience">Expérience</a>
-    <a href="../index.html#projets">Projets</a>
-    <a href="../index.html#certifications">Certifications</a>
-    <a href="../index.html#contact">Contact</a>
-  </div>
-</nav>
 
-<!-- ══ HERO PROJET ═══════════════════════════════ -->
-<section class="project-hero">
-  <div class="container">
-    <a href="../index.html#projets" class="project-back fade-in">
-      <i class="fa-solid fa-arrow-left"></i> Retour aux projets
-    </a>
-    <div class="fade-in">
-      <div style="font-size:48px;margin-bottom:16px;">🔒</div>
-      <h1>ERIS-CORP — Architecture IAM & Bastion Linux</h1>
-      <p style="font-size:18px;color:var(--muted);margin-bottom:20px;">Conception et audit d'une architecture d'identité et d'accès sécurisée</p>
-      <div class="project-hero-meta">
-        <span class="meta-item"><i class="fa-solid fa-calendar"></i> 2025 – 2026</span>
-        <span class="meta-item"><i class="fa-solid fa-location-dot"></i> Projet académique — IMIE Paris</span>
-        <span class="status-badge status-done">Réalisé</span>
-      </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;">
-        <span class="tag-purple">Linux Debian</span><span class="tag-purple">Active Directory</span><span class="tag-purple">Azure AD</span><span class="tag-purple">Bastion SSH</span><span class="tag-purple">ANSSI</span><span class="tag-purple">ISO 27001</span><span class="tag-purple">RGPD</span>
-      </div>
-    </div>
-  </div>
+  </div><!-- /tp-block -->
+</div>
 </section>
 
-<!-- ══ CONTENU ═══════════════════════════════════ -->
-<section class="project-content">
-  <div class="container">
+<!-- ─── TP1 : ACTIVE DIRECTORY ─── -->
+<section class="section">
+<div class="container">
 
-    <!-- Contexte -->
-    <div class="content-section fade-in">
-      <h2><i class="fa-solid fa-circle-info" style="color:var(--imie-blue);margin-right:10px;"></i>Contexte</h2>
-      <p>Projet fil rouge du Mastère ERIS à l'IMIE Paris. L'objectif était de concevoir une architecture IAM complète pour une entreprise fictive (ERIS-CORP), incluant le déploiement d'un Bastion Linux et un audit de sécurité.</p>
-    </div>
-
-    <!-- Informations clés -->
-    <div class="content-section fade-in">
-      <h2><i class="fa-solid fa-table" style="color:var(--imie-blue);margin-right:10px;"></i>Informations clés</h2>
-      <div class="info-grid">
-        <div class="info-card"><div class="info-label">Période</div><div class="info-value">2025 – 2026</div></div>
-        <div class="info-card"><div class="info-label">Lieu</div><div class="info-value">Projet académique — IMIE Paris</div></div>
-        <div class="info-card"><div class="info-label">Statut</div><div class="info-value">Réalisé</div></div>
-        <div class="info-card"><div class="info-label">Technologies</div><div class="info-value">7 outils</div></div>
-      </div>
-    </div>
-
-    <!-- Objectifs -->
-    <div class="content-section fade-in">
-      <h2><i class="fa-solid fa-bullseye" style="color:var(--imie-blue);margin-right:10px;"></i>Objectifs</h2>
-      <ul><li>Concevoir une architecture IAM robuste et conforme ANSSI</li><li>Déployer un Bastion Linux pour l'accès sécurisé aux serveurs</li><li>Réaliser un audit de sécurité complet</li><li>Documenter les procédures et livrables</li></ul>
-    </div>
-
-    <!-- Réalisations -->
-    <div class="content-section fade-in">
-      <h2><i class="fa-solid fa-check-circle" style="color:var(--imie-blue);margin-right:10px;"></i>Réalisations</h2>
-      <ul><li>Conception de l'architecture IAM : rôles, permissions, flux d'accès</li><li>Déploiement d'un Bastion Linux avec authentification par clé SSH</li><li>Mise en place des politiques de moindre privilège</li><li>Audit de sécurité : identification des vulnérabilités et plan de remédiation</li><li>Documentation complète : schémas, procédures, rapport d'audit</li></ul>
-    </div>
-
-    <!-- Documentation -->
-    <div class="content-section fade-in">
-      <h2><i class="fa-brands fa-github" style="color:var(--imie-blue);margin-right:10px;"></i>Documentation & Code</h2>
-      <div class="coming-soon-box">
-        <div style="font-size:40px;">🚧</div>
-        <p>Le dépôt GitHub de ce projet sera disponible prochainement.<br>La documentation technique complète (schémas, procédures, rapport) sera publiée ici.</p>
-        <a href="#" class="btn btn-primary btn-sm" style="margin-top:20px;display:inline-flex;" style="opacity:0.5;pointer-events:none;">
-          <i class="fa-brands fa-github"></i> Voir sur GitHub
-        </a>
-      </div>
-    </div>
-
+  <div class="section-header">
+    <span class="section-num">TP1</span>
+    <h2 class="section-title">Annuaire &amp; Identités — <span class="accent">AD DS, OU, RBAC, LDAP</span></h2>
+    <div class="section-line"></div>
   </div>
-</section>
 
-<!-- ══ NAVIGATION PROJETS ════════════════════════ -->
-<div class="bg-alt" style="padding:40px 0;">
-  <div class="container" style="text-align:center;">
-    <p style="color:var(--muted);margin-bottom:20px;">Découvrir d'autres projets</p>
-    <a href="../index.html#projets" class="btn btn-secondary"><i class="fa-solid fa-grid-2"></i> Voir tous les projets</a>
+  <div class="tp-block">
+    <div class="tp-header">
+      <span class="tp-tag">AD DS</span>
+      <h3 class="tp-title">Déploiement Active Directory</h3>
+    </div>
+
+    <p class="prose">
+      Déploiement d'un domaine <strong>Active Directory</strong> avec DNS redondant (DC1/DC2),
+      structuration de l'annuaire en Unités d'Organisation, implémentation d'un modèle <strong>RBAC</strong>
+      par groupes de sécurité, jointure d'un poste Windows 11 et préparation de l'interopérabilité
+      <strong>LDAP/LDAPS</strong> pour l'intégration applicative.
+    </p>
+
+    <!-- IMAGE 4 : Gestionnaire de serveur AD DS sur DC1 -->
+    <div class="img-slot">
+      <div class="img-num">IMG_04</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M3 9h18M9 21V9"/>
+      </svg>
+      <div class="img-label">Étape A — Gestionnaire de serveur : AD DS actif sur DC1<br>IP 10.20.0.10 — Rôle AD DS installé et promu</div>
+    </div>
+
+    <!-- IMAGE 5 : DNS auxiliaire DC2 (prop TCP/IPv4) -->
+    <div class="img-slot">
+      <div class="img-num">IMG_05</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M3 9h18M9 21V9"/>
+      </svg>
+      <div class="img-label">Étape B — Ajout de DC2 comme DNS auxiliaire (10.20.0.11)<br>Propriétés TCP/IPv4 — Redondance DNS</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Structure OU — Modèle entreprise ERIS-CORP</h4>
+
+    <!-- IMAGE 6 : Console AD avec structure OU -->
+    <div class="img-slot">
+      <div class="img-num">IMG_06</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 3h6v6H3zM15 3h6v6h-6zM9 15h6v6H9zM3 15h6v6H3zM15 15h6v6h-6z"/>
+      </svg>
+      <div class="img-label">Étape C — Structure OU créée dans eris.local<br>Computers — APP2-SRV, BASTION-02, IDP1, NEXTCLOUD-SRV-A, SIEM, WIN-10</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Étape D — Groupes RBAC (Rôles métiers)</h4>
+
+    <!-- IMAGE 7 : Groupes RBAC dans la console AD -->
+    <div class="img-slot">
+      <div class="img-num">IMG_07</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <div class="img-label">Étape D — Groupes de sécurité RBAC créés<br>GRP_All_Users, GRP_FIN, GRP_HR, GRP_IT_Admins, GRP_IT_Support_N1, GRP_IT_Support_N2</div>
+    </div>
+
+    <table class="rbac-table">
+      <thead>
+        <tr>
+          <th>Rôle métier</th>
+          <th>Groupe AD</th>
+          <th>Applications</th>
+          <th>Niveau d'accès</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Employé standard</td>
+          <td><code style="font-family:var(--code);color:var(--accent3);">GRP_All_Users</code></td>
+          <td><span class="tag">APP1</span></td>
+          <td>Lecture</td>
+        </tr>
+        <tr>
+          <td>Support IT N1</td>
+          <td><code style="font-family:var(--code);color:var(--accent3);">GRP_IT_Support_N1</code></td>
+          <td><span class="tag">APP1</span></td>
+          <td>Lecture / Support</td>
+        </tr>
+        <tr>
+          <td>Support IT N2</td>
+          <td><code style="font-family:var(--code);color:var(--accent3);">GRP_IT_Support_N2</code></td>
+          <td><span class="tag">APP1</span><span class="tag">APP2</span></td>
+          <td>Support étendu</td>
+        </tr>
+        <tr>
+          <td>Administrateur IT</td>
+          <td><code style="font-family:var(--code);color:var(--accent3);">GRP_IT_Admins</code></td>
+          <td><span class="tag">APP1</span><span class="tag">APP2</span></td>
+          <td>Admin (via PAM)</td>
+        </tr>
+        <tr>
+          <td>Finance</td>
+          <td><code style="font-family:var(--code);color:var(--accent3);">GRP_FIN</code></td>
+          <td><span class="tag">APP2</span></td>
+          <td>Lecture / Écriture</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Étape E — Comptes utilisateurs (nominatifs, admins, services)</h4>
+
+    <!-- IMAGE 8 : Utilisateurs nominatifs (alice durand, bob martin, charles bernard) -->
+    <div class="img-slot">
+      <div class="img-num">IMG_08</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+      </svg>
+      <div class="img-label">Groupe des Utilisateurs Nominatifs<br>alice.durand / bob.martin / charles.bernard</div>
+    </div>
+
+    <!-- IMAGE 9 : Groupe Administrateurs (admin alice) -->
+    <div class="img-slot">
+      <div class="img-num">IMG_09</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <div class="img-label">Groupe des Administrateurs<br>admin.alice — OU=Admins</div>
+    </div>
+
+    <!-- IMAGE 10 : Comptes de service (svc_app1, svc_ldap_bind) -->
+    <div class="img-slot">
+      <div class="img-num">IMG_10</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+      </svg>
+      <div class="img-label">Groupe des Comptes Services<br>svc_app1 / svc_ldap_bind — OU=ServiceAccounts</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Étape G — Préparation LDAP/LDAPS</h4>
+
+    <div class="info-grid one">
+      <div class="info-card">
+        <div class="info-card-label">Paramètres LDAP de référence</div>
+        <div class="info-card-body" style="font-family:var(--code);font-size:11px;line-height:2;color:var(--accent3);">
+          Base DN : <span style="color:var(--white);">DC=eris,DC=local</span><br>
+          Bind DN : <span style="color:var(--white);">CN=svc_ldap_bind,OU=ServiceAccounts,DC=eris,DC=local</span><br>
+          Serveur : <span style="color:var(--white);">dc1.eris.local</span> (secours : dc2.eris.local)<br>
+          Port LDAP : <span style="color:var(--green);">389</span> &nbsp;|&nbsp; Port LDAPS : <span style="color:var(--green);">636</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">APP1 — Ubuntu 22.04</div>
+      <pre><span class="cmd">sudo apt update && sudo apt -y install ldap-utils</span>
+<span class="comment"># Test requête LDAP anonyme depuis APP1</span>
+<span class="cmd">ldapsearch -x -H ldap://dc1.eris.local -s base</span></pre>
+    </div>
+
+    <!-- IMAGE 11 : ldapsearch depuis APP1 (CAPTURE 1) -->
+    <div class="img-slot">
+      <div class="img-num">IMG_11</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">CAPTURE 1 — ldapsearch depuis APP1<br>Requête LDAP anonyme vers dc1.eris.local</div>
+    </div>
+
+    <!-- IMAGE 12 : Compte svc_ldap_bind dans Keycloak CAPTURE 2 -->
+    <div class="img-slot">
+      <div class="img-num">IMG_12</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">CAPTURE 2 — Compte svc_ldap_bind créé<br>OU=ServiceAccounts — Droits lecture LDAP</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Questions de consolidation</h4>
+
+    <div class="answer-block">
+      <div class="answer-q">Pourquoi séparer comptes nominatif et compte admin ? (2 risques concrets)</div>
+      <div class="answer-a">
+        <strong style="color:var(--accent3);">Risque 1 — Élévation de privilèges non maîtrisée :</strong> si le compte nominatif dispose de droits admin permanents et qu'il est compromis (phishing, vol de mot de passe), l'attaquant obtient immédiatement un accès administrateur complet au SI sans aucune barrière supplémentaire. La séparation oblige une étape d'élévation consciente et tracée.<br><br>
+        <strong style="color:var(--accent3);">Risque 2 — Propagation latérale facilitée :</strong> un seul compte avec double rôle représente une cible unique. Un attaquant compromettant l'e-mail d'un admin via son compte nominatif (utilisé pour la navigation web, la messagerie) accède directement aux ressources d'administration critiques — serveurs, contrôleurs de domaine — sans devoir escalader.
+      </div>
+    </div>
+
+    <div class="answer-block">
+      <div class="answer-q">Rôle du DNS et du NTP pour Kerberos</div>
+      <div class="answer-a">
+        <strong style="color:var(--accent3);">DNS :</strong> Kerberos repose entièrement sur la résolution de noms pour localiser les KDC (Key Distribution Centers). Chaque ticket Kerberos est émis pour un nom de service précis (SPN — Service Principal Name). Sans résolution DNS correcte, le client ne peut pas trouver le bon contrôleur de domaine, et l'authentification échoue avec des erreurs KRB5 ou LDAP.<br><br>
+        <strong style="color:var(--accent3);">NTP :</strong> Kerberos impose une tolérance temporelle maximale de 5 minutes entre client et serveur (clock skew). Au-delà, les tickets sont rejetés comme invalides pour prévenir les attaques par rejeu (replay attacks). Une désynchronisation des horloges provoque immédiatement des échecs d'authentification silencieux — les utilisateurs ne peuvent plus se connecter alors que les comptes sont valides.
+      </div>
+    </div>
+
+    <div class="answer-block">
+      <div class="answer-q">Différence entre un groupe RBAC et une OU</div>
+      <div class="answer-a">
+        <strong style="color:var(--accent3);">OU (Unité d'Organisation) :</strong> conteneur administratif dans l'annuaire AD servant à déléguer l'administration et appliquer des GPO (Group Policy Objects). L'OU structure la hiérarchie de gestion — elle ne contrôle pas l'accès aux ressources mais organise l'administration des objets (comptes, machines, groupes).<br><br>
+        <strong style="color:var(--accent3);">Groupe RBAC :</strong> mécanisme de contrôle d'accès aux ressources (applications, dossiers partagés, services). L'appartenance à un groupe RBAC détermine ce qu'un utilisateur peut faire — lire, écrire, administrer une application. Un même utilisateur peut appartenir à plusieurs groupes RBAC selon ses rôles métiers, indépendamment de l'OU où son compte est stocké.
+      </div>
+    </div>
+
   </div>
 </div>
+</section>
 
-<!-- ══ FOOTER ════════════════════════════════════ -->
-<footer>
-  <p>Ranguebaye Nantara &nbsp;·&nbsp; Administrateur Systèmes, Réseaux & Sécurité &nbsp;·&nbsp; <span id="year"></span></p>
+<!-- ─── TP2 : MFA / ZERO TRUST ─── -->
+<section class="section">
+<div class="container">
+
+  <div class="section-header">
+    <span class="section-num">TP2</span>
+    <h2 class="section-title">Authentification Forte — <span class="accent">MFA &amp; Zero Trust</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tp-block">
+    <div class="tp-header">
+      <span class="tp-tag green">Keycloak</span>
+      <h3 class="tp-title">Déploiement Keycloak + MFA TOTP</h3>
+    </div>
+
+    <p class="prose">
+      Mise en œuvre d'une <strong>authentification multifacteur (MFA)</strong> via TOTP pour l'accès applicatif
+      via SSO, configuration de règles d'<strong>accès conditionnel</strong> (horaires, réseau source),
+      et application d'une approche <strong>Zero Trust</strong> : vérifier explicitement l'identité,
+      limiter les privilèges, journaliser et valider en continu.
+    </p>
+
+    <div class="code-block">
+      <div class="code-label">IDP1 — Installation Docker</div>
+      <pre><span class="cmd">sudo apt update && sudo apt -y install ca-certificates curl gnupg</span>
+<span class="cmd">sudo apt -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</span>
+<span class="cmd">sudo usermod -aG docker $USER && reboot</span></pre>
+    </div>
+
+    <!-- IMAGE 13 : Installation Docker + reboot -->
+    <div class="img-slot">
+      <div class="img-num">IMG_13</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">Installation Docker Engine sur IDP1<br>sudo usermod -aG docker $USER — reboot</div>
+    </div>
+
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin:28px 0 16px;">Configuration docker-compose.yml — Keycloak + PostgreSQL</h4>
+
+    <div class="code-block">
+      <div class="code-label">/opt/keycloak/docker-compose.yml</div>
+      <pre><span class="key">version:</span> <span class="string">"3.9"</span>
+<span class="key">services:</span>
+  <span class="key">db:</span>
+    <span class="key">image:</span> postgres:16
+    <span class="key">environment:</span>
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: ChangeMe_DB_Password!
+    <span class="key">volumes:</span>
+      - kc_db:/var/lib/postgresql/data
+    <span class="key">restart:</span> unless-stopped
+
+  <span class="key">keycloak:</span>
+    <span class="key">image:</span> quay.io/keycloak/keycloak:25.0
+    <span class="key">command:</span> start
+    <span class="key">environment:</span>
+      KC_DB: postgres
+      KC_DB_URL_HOST: db
+      KC_HOSTNAME: idp1.eris.local
+      KC_HTTP_ENABLED: <span class="string">"true"</span>
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: ChangeMe_Admin!
+    <span class="key">ports:</span>
+      - <span class="string">"8080:8080"</span>
+    <span class="key">depends_on:</span>
+      - db</pre>
+    </div>
+
+    <!-- IMAGE 14 : docker compose up -d + conteneurs Up -->
+    <div class="img-slot">
+      <div class="img-num">IMG_14</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">docker compose up -d — Pull Keycloak 25.0 + PostgreSQL 16<br>Conteneurs keycloak-keycloak-1 et keycloak-db-1 : Up</div>
+    </div>
+
+    <!-- IMAGE 15 : Interface Keycloak HTTP accessible depuis W11-01 -->
+    <div class="img-slot">
+      <div class="img-num">IMG_15</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      <div class="img-label">Keycloak accessible sur http://idp1.eris.local:8080<br>Page de connexion Sign in — depuis W11-01</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Étape C — HTTPS avec Nginx (certificat TLS self-signed)</h4>
+
+    <div class="code-block">
+      <div class="code-label">IDP1 — Génération certificat TLS</div>
+      <pre><span class="cmd">sudo apt -y install nginx openssl</span>
+<span class="cmd">sudo mkdir -p /etc/nginx/tls</span>
+<span class="cmd">sudo openssl req -x509 -newkey rsa:4096 -sha256 -days 365 -nodes \
+  -keyout /etc/nginx/tls/idp1.key -out /etc/nginx/tls/idp1.crt \
+  -subj "/CN=idp1.eris.local"</span></pre>
+    </div>
+
+    <!-- IMAGE 16 : Keycloak HTTPS console admin depuis W11-01 -->
+    <div class="img-slot">
+      <div class="img-num">IMG_16</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      <div class="img-label">Keycloak activé en HTTPS — Console admin master realm<br>https://idp1.eris.local — Nginx reverse proxy</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Étape D — Fédération AD via LDAP (Keycloak → DC1)</h4>
+
+    <div class="info-grid one">
+      <div class="info-card green">
+        <div class="info-card-label">Paramètres User Federation LDAP</div>
+        <div class="info-card-body" style="font-family:var(--code);font-size:11px;line-height:2;color:var(--accent3);">
+          LDAP URL : <span style="color:var(--white);">ldap://dc1.eris.local:389 (10.20.0.10)</span><br>
+          Vendor : <span style="color:var(--white);">Active Directory</span><br>
+          Edit Mode : <span style="color:var(--green);">READ_ONLY</span><br>
+          Users DN : <span style="color:var(--white);">OU=Userss,DC=eris,DC=local</span><br>
+          Bind DN : <span style="color:var(--white);">CN=svc_ldap_bind,OU=ServiceAccounts,DC=eris,DC=local</span><br>
+          Username LDAP attribute : <span style="color:var(--white);">cn</span> &nbsp;|&nbsp; UUID : <span style="color:var(--white);">objectGUID</span><br>
+          User object classes : <span style="color:var(--white);">person, organizationalPerson, user</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMAGE 17 : Config LDAP Keycloak (connexion réussie) -->
+    <div class="img-slot">
+      <div class="img-num">IMG_17</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M3 9h18M9 21V9"/>
+      </svg>
+      <div class="img-label">Configuration LDAP Keycloak — Test connection OK<br>Successfully connected to LDAP — Realm ERIS</div>
+    </div>
+
+    <!-- IMAGE 18 : Synchronisation users AD dans Keycloak (alice.durand, bob.martin, etc.) -->
+    <div class="img-slot">
+      <div class="img-num">IMG_18</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <div class="img-label">Synchronisation Keycloak — 5 users importés depuis AD<br>admin.alice / alice.durand / bob.martin / charles.bernard / svc.app1</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Étape E — Activation MFA TOTP (OTP via Authenticator)</h4>
+
+    <ul class="step-list">
+      <li><span class="step-num">01.</span><div class="step-body">Realm ERIS → <strong>Authentication → Flows</strong> — Dupliquer le flow Browser en <code>Browser-ERIS</code></div></li>
+      <li><span class="step-num">02.</span><div class="step-body">Ajouter <code>OTP Form</code> après <code>Username Password Form</code> — Mettre en mode <strong>Required</strong></div></li>
+      <li><span class="step-num">03.</span><div class="step-body">Realm ERIS → <strong>Bindings → Browser Flow</strong> = Browser-ERIS</div></li>
+      <li><span class="step-num">04.</span><div class="step-body">Premier login utilisateur : scan QR Code avec <strong>Microsoft Authenticator / Google Authenticator</strong>, saisie code 6 chiffres</div></li>
+    </ul>
+
+    <!-- IMAGE 19 : QR Code MFA setup + flow Browser-ERIS -->
+    <div class="img-slot">
+      <div class="img-num">IMG_19</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/>
+      </svg>
+      <div class="img-label">MFA Setup — QR Code alice.durand<br>Flow Browser-ERIS — OTP Form Required — Code TOTP 062 791</div>
+    </div>
+
+    <!-- IMAGE 20 : alice.durand connectée au compte ERIS avec MFA -->
+    <div class="img-slot">
+      <div class="img-num">IMG_20</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      <div class="img-label">alice.durand — Accès validé au Realm ERIS<br>Personal Info — MFA TOTP activé</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Étape G — Protection APP1 par OIDC (oauth2-proxy)</h4>
+
+    <!-- IMAGE 21 : APP1 Nginx installé + page protégée -->
+    <div class="img-slot">
+      <div class="img-num">IMG_21</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">CAPTURE — APP1 nginx installé<br>curl -I http://app1.eris.local → HTTP/1.1 200 OK depuis IDP1</div>
+    </div>
+
+    <!-- IMAGE 22 : Redirection OAuth2 Proxy → Keycloak ERIS -->
+    <div class="img-slot">
+      <div class="img-num">IMG_22</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      <div class="img-label">Redirection OAuth2 Proxy → Sign in with OpenID Connect<br>Puis redirection vers Keycloak ERIS — idp1.eris.local</div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ─── TP3 : SSO OIDC/SAML ─── -->
+<section class="section">
+<div class="container">
+
+  <div class="section-header">
+    <span class="section-num">TP3</span>
+    <h2 class="section-title">Fédération &amp; SSO — <span class="accent">OIDC &amp; SAML</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tp-block">
+    <div class="tp-header">
+      <span class="tp-tag gold">SSO</span>
+      <h3 class="tp-title">OpenID Connect + SimpleSAMLphp</h3>
+    </div>
+
+    <p class="prose">
+      Mise en place d'un <strong>SSO complet</strong> entre un IdP (Keycloak) et deux SP :
+      <strong>APP1</strong> (SP OIDC via oauth2-proxy) et <strong>APP2</strong> (SP SAML via SimpleSAMLphp).
+      Validation des flux de redirection, des assertions et des jetons, et application des bonnes pratiques
+      HTTPS, redirect URIs, signatures et limitation des claims.
+    </p>
+
+    <div class="info-grid four">
+      <div class="info-card">
+        <div class="info-card-label">DC1 / DC2</div>
+        <div class="info-card-title">10.20.0.10/.11</div>
+        <div class="info-card-body">AD DS + DNS<br>Base identités</div>
+      </div>
+      <div class="info-card green">
+        <div class="info-card-label">IDP1 — Keycloak</div>
+        <div class="info-card-title">10.20.0.50</div>
+        <div class="info-card-body">IdP OIDC/SAML<br>LDAP vers DC1</div>
+      </div>
+      <div class="info-card gold">
+        <div class="info-card-label">APP1 — SP OIDC</div>
+        <div class="info-card-title">10.20.0.40</div>
+        <div class="info-card-body">oauth2-proxy<br>Dépend IDP1</div>
+      </div>
+      <div class="info-card warn">
+        <div class="info-card-label">APP2 — SP SAML</div>
+        <div class="info-card-title">10.20.0.41</div>
+        <div class="info-card-body">SimpleSAMLphp<br>SAML vers IDP1</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Partie A — SP OIDC (APP1) — Discovery endpoint</h4>
+
+    <div class="code-block">
+      <div class="code-label">Validation endpoints OIDC depuis W11-01</div>
+      <pre><span class="cmd">curl -k https://idp1.eris.local/realms/ERIS/.well-known/openid-configuration</span>
+<span class="comment"># Retourne : authorization_endpoint, token_endpoint, userinfo_endpoint,
+# jwks_uri, introspection_endpoint, etc.</span></pre>
+    </div>
+
+    <!-- IMAGE 23 : Commande curl openid-configuration depuis W11-01 -->
+    <div class="img-slot">
+      <div class="img-num">IMG_23</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">Partie A — curl openid-configuration<br>Endpoints OIDC Discovery — Realm ERIS</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Partie B — SP SAML (APP2) : SimpleSAMLphp</h4>
+
+    <div class="code-block">
+      <div class="code-label">APP2 — Installation SimpleSAMLphp</div>
+      <pre><span class="cmd">sudo apt update && sudo apt -y install nginx php-fpm php-xml php-mbstring php-curl php-zip php-gd unzip</span>
+<span class="cmd">cd /tmp && wget https://github.com/simplesamlphp/simplesamlphp/releases/download/v2.0.4/simplesamlphp-2.0.4.tar.gz</span>
+<span class="cmd">tar -xzf simplesamlphp-2.0.4.tar.gz</span>
+<span class="cmd">sudo rsync -a simplesamlphp-2.0.4/ /var/www/simplesamlphp/</span></pre>
+    </div>
+
+    <!-- IMAGE 24 : SimpleSAMLphp page web accessible depuis W11-01 (CAPTURE) -->
+    <div class="img-slot">
+      <div class="img-num">IMG_24</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      <div class="img-label">CAPTURE — APP2 : http://app2.eris.local<br>Page SimpleSAMLphp accessible — Nginx + PHP-FPM</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Partie C — Client OIDC app1-oidc dans Keycloak</h4>
+
+    <!-- IMAGE 25 : Client app1-oidc dans Keycloak (paramètres) -->
+    <div class="img-slot">
+      <div class="img-num">IMG_25</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M3 9h18M9 21V9"/>
+      </svg>
+      <div class="img-label">Keycloak — Client app1-oidc (OpenID Connect)<br>Valid redirect URIs + Web origins app1.eris.local</div>
+    </div>
+
+    <!-- IMAGE 26 : Client Secret app1-oidc (Credentials) -->
+    <div class="img-slot">
+      <div class="img-num">IMG_26</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+      <div class="img-label">CAPTURE 1 — Client Secret app1-oidc<br>SAML — Métadonnées SP exportées</div>
+    </div>
+
+    <!-- IMAGE 27 : SAML IdP Metadata Keycloak / SimpleSAMLphp CAPTURE 2 -->
+    <div class="img-slot">
+      <div class="img-num">IMG_27</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      <div class="img-label">CAPTURE 2 — Métadonnées IdP Keycloak importées dans SimpleSAMLphp<br>saml20-idp-remote.php — Échange métadonnées SAML</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Questions de consolidation</h4>
+
+    <div class="answer-block">
+      <div class="answer-q">SAML en environnements legacy vs OIDC pour applications modernes</div>
+      <div class="answer-a">
+        <strong style="color:var(--accent3);">SAML</strong> est plus répandu dans les environnements legacy car il a été conçu au début des années 2000 pour les architectures web d'entreprise. Il repose sur des assertions XML signées, nativement compatibles avec les SI d'entreprise traditionnels (ERP, portails intranet), et est intégré nativement dans de nombreuses solutions SaaS historiques (Salesforce, Office 365 avant OIDC). Sa lourdeur XML est un avantage dans des contextes où la traçabilité formelle et les certificats sont déjà en place.<br><br>
+        <strong style="color:var(--accent3);">OIDC</strong> (basé sur OAuth 2.0) est conçu pour les applications modernes : flux JSON légers, tokens JWT, support natif des applications mobile et SPA, et interopérabilité simplifiée avec les API REST. Sa simplicité d'implémentation et son alignement avec les standards web actuels en font le choix par défaut pour les nouvelles applications cloud-native.
+      </div>
+    </div>
+
+    <div class="answer-block">
+      <div class="answer-q">Informations clés à contrôler dans un jeton OIDC (ID token)</div>
+      <div class="answer-a">
+        <strong style="color:var(--accent3);">sub</strong> (Subject) — Identifiant unique et stable de l'utilisateur dans l'IdP. Sert de clé de référence immuable.<br>
+        <strong style="color:var(--accent3);">iss</strong> (Issuer) — URL de l'IdP qui a émis le token. Doit correspondre exactement à l'IdP de confiance configuré.<br>
+        <strong style="color:var(--accent3);">aud</strong> (Audience) — Client ID du SP destinataire. Évite qu'un token émis pour APP1 soit utilisé sur APP2.<br>
+        <strong style="color:var(--accent3);">exp</strong> (Expiration) — Horodatage d'expiration. Un token expiré doit être systématiquement rejeté.<br>
+        <strong style="color:var(--accent3);">preferred_username / email</strong> — Attributs utilisateur à valider selon les claims exposés par l'IdP.
+      </div>
+    </div>
+
+    <div class="answer-block">
+      <div class="answer-q">Rôle de l'ACS URL dans SAML et conséquences d'une mauvaise configuration</div>
+      <div class="answer-a">
+        L'<strong style="color:var(--accent3);">ACS URL (Assertion Consumer Service)</strong> est l'endpoint du SP vers lequel l'IdP envoie la réponse SAML après authentification réussie. C'est le point de retour sécurisé du flux SSO.<br><br>
+        Si elle est mal configurée : l'IdP envoie l'assertion SAML vers une URL incorrecte (inexistante ou appartenant à un tiers), provoquant soit une erreur 404 silencieuse, soit — dans le pire cas — une redirection vers un site malveillant qui capture l'assertion et usurpe l'identité de l'utilisateur (attaque open redirect / assertion hijacking). C'est pourquoi les ACS URL doivent être validées strictement sans wildcard.
+      </div>
+    </div>
+
+    <div class="answer-block">
+      <div class="answer-q">3 erreurs de configuration fédération qui provoquent des failles</div>
+      <div class="answer-a">
+        <strong style="color:var(--red);">1. Redirect URI trop large (wildcard)</strong> — Configurer <code style="font-family:var(--code);color:var(--accent3);">https://*.example.com/*</code> permet à un attaquant de créer un sous-domaine malveillant et d'intercepter les tokens OAuth via une redirection légitime.<br><br>
+        <strong style="color:var(--red);">2. Absence de vérification de signature SAML</strong> — Accepter des assertions non signées ou avec un certificat expiré permet de forger des assertions et de s'authentifier sous n'importe quelle identité sans avoir de compte valide.<br><br>
+        <strong style="color:var(--red);">3. Client public sans PKCE</strong> — Un client OIDC configuré en mode public (sans secret) sans PKCE (Proof Key for Code Exchange) est vulnérable au vol du code d'autorisation : un attaquant interceptant le code peut l'échanger contre un token d'accès valide.
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ─── TP4 : IGA ─── -->
+<section class="section">
+<div class="container">
+
+  <div class="section-header">
+    <span class="section-num">TP4</span>
+    <h2 class="section-title">Gouvernance des Identités — <span class="accent">IGA, JML &amp; SoD</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tp-block">
+    <div class="tp-header">
+      <span class="tp-tag warn">IGA</span>
+      <h3 class="tp-title">Recertification &amp; Séparation des Tâches</h3>
+    </div>
+
+    <p class="prose">
+      Mise en œuvre d'une <strong>gouvernance des identités (IGA)</strong> avec modélisation des rôles,
+      déploiement du processus <strong>Joiner/Mover/Leaver (JML)</strong>, organisation d'une recertification
+      périodique des droits et mise en évidence des conflits de <strong>Séparation des Tâches (SoD)</strong>.
+    </p>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Processus JML — Cas pratique : Alice Durand</h4>
+
+    <div class="info-grid three">
+      <div class="info-card green">
+        <div class="info-card-label">Joiner — Arrivée</div>
+        <div class="info-card-title">Création du compte</div>
+        <div class="info-card-body">Compte créé dans AD (OU=Users), affectation groupe RBAC, propagation automatique des accès via SSO Keycloak</div>
+      </div>
+      <div class="info-card gold">
+        <div class="info-card-label">Mover — Changement</div>
+        <div class="info-card-title">RH → IT Support N1</div>
+        <div class="info-card-body">Retrait de GRP_HR, ajout à GRP_IT_Support_N1, traçabilité du changement (date, valideur, justification)</div>
+      </div>
+      <div class="info-card red">
+        <div class="info-card-label">Leaver — Départ</div>
+        <div class="info-card-title">Désactivation immédiate</div>
+        <div class="info-card-body">Compte désactivé, retrait de tous les groupes, archivage des accès et traces — vérification d'impossibilité de connexion</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Conflits SoD identifiés</h4>
+
+    <div class="info-grid one">
+      <div class="info-card warn">
+        <div class="info-card-label">Conflits de Séparation des Tâches</div>
+        <div class="info-card-body">
+          <span class="badge warn">GRP_FIN + GRP_IT_Admins</span> — Finance + Admin système : accès financiers + capacité à modifier les systèmes comptables<br>
+          <span class="badge warn">GRP_HR + GRP_IT_Admins</span> — RH + Admin : accès aux données RH + capacité à modifier les comptes utilisateurs<br><br>
+          <strong style="color:var(--white);">Test SoD réalisé :</strong> ajout volontaire de alice.durand dans GRP_FIN et GRP_IT_Admins → conflit identifié → retrait de GRP_IT_Admins documenté.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Questions de consolidation</h4>
+
+    <div class="answer-block">
+      <div class="answer-q">Pourquoi l'IGA est-elle indispensable même avec un IAM techniquement robuste ?</div>
+      <div class="answer-a">Un IAM robuste contrôle qui peut accéder à quoi techniquement, mais ne garantit pas que ces accès sont <em>toujours légitimes</em>. Sans IGA, les droits s'accumulent au fil du temps (effet de cumul de droits) : un utilisateur ayant changé de poste conserve ses anciens accès. L'IGA impose la revue périodique (recertification), la traçabilité des décisions d'accès et la détection des conflits SoD — autant de contrôles que la technologie seule ne peut pas remplacer. C'est la gouvernance humaine qui valide que les accès accordés sont encore justifiés.
+      </div>
+    </div>
+
+    <div class="answer-block">
+      <div class="answer-q">Différence entre RBAC et ABAC dans un contexte gouvernance</div>
+      <div class="answer-a">
+        <strong style="color:var(--accent3);">RBAC</strong> (Role-Based Access Control) attribue les droits selon le rôle métier. Simple à administrer, idéal pour les accès stables : un membre de GRP_FIN a accès à APP2 Finance. La gouvernance RBAC consiste à s'assurer que les bons utilisateurs sont dans les bons groupes.<br><br>
+        <strong style="color:var(--accent3);">ABAC</strong> (Attribute-Based Access Control) conditionne l'accès à des attributs contextuels multiples : heure, localisation, type d'appareil, sensibilité des données. Plus granulaire et dynamique — une même règle peut autoriser l'accès depuis le réseau interne en heures ouvrées et le bloquer hors de ces conditions. En gouvernance, ABAC permet des politiques plus fines mais nécessite une administration plus complexe des attributs.
+      </div>
+    </div>
+
+    <div class="answer-block">
+      <div class="answer-q">Risques si la recertification n'est jamais effectuée</div>
+      <div class="answer-a">
+        Sans recertification périodique : les anciens employés ou prestataires conservent des accès post-contrat (comptes fantômes), des utilisateurs mutés accumulent des droits des anciens postes (privilege creep), et les conflits SoD non détectés créent des risques de fraude interne. Sur le plan réglementaire (RGPD, ISO 27001, SOX), l'absence de recertification constitue une non-conformité directement sanctionnable lors d'un audit. En sécurité opérationnelle, un compte oublié avec droits admin est une porte d'entrée idéale pour un attaquant ou un insider malveillant.
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ─── TP5 : PAM BASTION ─── -->
+<section class="section">
+<div class="container">
+
+  <div class="section-header">
+    <span class="section-num">TP5</span>
+    <h2 class="section-title">Privileged Access Management — <span class="accent">Bastion &amp; JIT</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tp-block">
+    <div class="tp-header">
+      <span class="tp-tag red">PAM</span>
+      <h3 class="tp-title">Bastion SSH — JIT, Séparation des Privilèges &amp; Traçabilité</h3>
+    </div>
+
+    <p class="prose">
+      Mise en œuvre d'un <strong>bastion d'administration</strong> centralisant tous les accès sensibles.
+      Application du principe du moindre privilège et des accès temporaires <strong>JIT (Just-In-Time)</strong>,
+      séparation stricte des comptes nominatifs et administrateurs, et traçabilité complète des actions via
+      <strong>auditd</strong> et les journaux SSH.
+    </p>
+
+    <div class="arch-diagram">
+      <div class="arch-nodes">
+        <div class="arch-row">
+          <div class="arch-node primary">
+            <div class="arch-node-title">W11-01</div>
+            <div class="arch-node-ip">10.20.0.21</div>
+            <div class="arch-node-role">Poste Admin (nominatif)</div>
+          </div>
+        </div>
+        <div class="arch-arrow">
+          <div class="arch-arrow-line"></div>
+          <div class="arch-arrow-label">SSH / RDP / HTTPS</div>
+          <div class="arch-arrow-line"></div>
+        </div>
+        <div class="arch-row">
+          <div class="arch-node primary" style="min-width:220px;border-color:var(--accent);">
+            <div class="arch-node-title">BASTION</div>
+            <div class="arch-node-ip">10.20.0.30 — Ubuntu 22.04</div>
+            <div class="arch-node-role">Point d'entrée unique · PAM/sudo JIT · Journalisation</div>
+          </div>
+        </div>
+        <div class="arch-row">
+          <div class="arch-arrow" style="margin-right:80px;">
+            <div class="arch-arrow-line"></div>
+            <div class="arch-arrow-label">SSH (clé)</div>
+            <div class="arch-arrow-line"></div>
+          </div>
+          <div class="arch-arrow" style="margin-left:80px;">
+            <div class="arch-arrow-line"></div>
+            <div class="arch-arrow-label">LDAP/DNS/SMB</div>
+            <div class="arch-arrow-line"></div>
+          </div>
+        </div>
+        <div class="arch-row">
+          <div class="arch-node secondary">
+            <div class="arch-node-title">APP1</div>
+            <div class="arch-node-ip">10.20.0.40</div>
+            <div class="arch-node-role">Serveur Applicatif Linux</div>
+          </div>
+          <div style="width:60px;display:flex;align-items:center;justify-content:center;">
+            <div style="width:40px;height:1px;background:var(--border);"></div>
+          </div>
+          <div class="arch-node tertiary">
+            <div class="arch-node-title">DC1</div>
+            <div class="arch-node-ip">10.20.0.10</div>
+            <div class="arch-node-role">AD/DNS/DHCP/GPO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Déploiement VM Bastion — Ubuntu Server 22.04</h4>
+
+    <!-- IMAGE 28 : VM Bastion login interface Ubuntu -->
+    <div class="img-slot">
+      <div class="img-num">IMG_28</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">Capture — BASTION VM démarrée<br>Ubuntu 22.04 LTS — bastion login interface</div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-label">BASTION — Configuration IP statique + DNS</div>
+      <pre><span class="comment"># /etc/netplan/00-installer-config.yaml</span>
+<span class="key">network:</span>
+  <span class="key">ethernets:</span>
+    <span class="key">ens33:</span>
+      <span class="key">addresses:</span> [10.20.0.30/24]
+      <span class="key">routes:</span> [{to: default, via: 10.20.0.1}]
+      <span class="key">nameservers:</span>
+        <span class="key">addresses:</span> [10.20.0.10, 10.20.0.11]
+<span class="cmd">sudo netplan apply && ip a</span></pre>
+    </div>
+
+    <!-- IMAGE 29 : ip a BASTION 10.20.0.30 -->
+    <div class="img-slot">
+      <div class="img-num">IMG_29</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">ip a — BASTION ens33 : 10.20.0.30/24<br>Configuration réseau appliquée</div>
+    </div>
+
+    <!-- IMAGE 30 : ping 10.20.0.3 depuis BASTION -->
+    <div class="img-slot">
+      <div class="img-num">IMG_30</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">Vérification — ping 10.20.0.3 OK<br>nslookup dc1.eris.local → 10.20.0.10</div>
+    </div>
+
+    <!-- IMAGE 31 : nslookup dc1.eris.local depuis BASTION -->
+    <div class="img-slot">
+      <div class="img-num">IMG_31</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">nslookup dc1.eris.local depuis BASTION<br>Non-authoritative answer : 10.20.0.10</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Durcissement SSH + Auditd</h4>
+
+    <div class="code-block">
+      <div class="code-label">/etc/ssh/sshd_config — Configuration sécurisée</div>
+      <pre><span class="comment"># Configuration SSH sécurisée</span>
+Port 22
+Protocol 2
+<span class="key">PermitRootLogin</span> no
+<span class="key">PasswordAuthentication</span> no
+<span class="key">PubkeyAuthentication</span> yes
+UsePAM yes
+KbdInteractiveAuthentication yes
+PermitEmptyPasswords no</pre>
+    </div>
+
+    <!-- IMAGE 32 : SSH config sshd_config nano + bastion login depuis W11-01 -->
+    <div class="img-slot">
+      <div class="img-num">IMG_32</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+      <div class="img-label">sshd_config durci — PubkeyAuthentication yes<br>Test SSH depuis W11-01 : ssh bastion@10.20.0.30</div>
+    </div>
+
+    <!-- IMAGE 33 : auditd installé + systemctl enable --now auditd -->
+    <div class="img-slot">
+      <div class="img-num">IMG_33</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">auditd installé + activé<br>systemctl status auditd — Active (running)</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Séparation des privilèges + Groupe pam-admins</h4>
+
+    <div class="code-block">
+      <div class="code-label">BASTION - Compte alice.bastion + groupe pam-admins</div>
+      <pre><span class="cmd">sudo adduser --force-badname alice.bastion</span>
+<span class="cmd">sudo groupadd pam-admins</span>
+<span class="comment"># Autoriser sudo uniquement au groupe pam-admins</span>
+<span class="cmd">echo "%pam-admins ALL=(ALL) ALL" | sudo tee /etc/sudoers.d/pam-admins</span>
+<span class="cmd">sudo chmod 440 /etc/sudoers.d/pam-admins</span>
+<span class="cmd">sudo visudo -c</span></pre>
+    </div>
+
+    <!-- IMAGE 34 : adduser alice.bastion + getent group pam-admins -->
+    <div class="img-slot">
+      <div class="img-num">IMG_34</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+      </svg>
+      <div class="img-label">alice.bastion créé — getent group pam-admins<br>sudoers.d/pam-admins — visudo -c : parsed OK</div>
+    </div>
+
+    <!-- IMAGE 35 : sudoers pam-admins vim + visudo -c parsé OK -->
+    <div class="img-slot">
+      <div class="img-num">IMG_35</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      <div class="img-label">%pam-admins ALL=(ALL) ALL<br>/etc/sudoers.d/pam-admins — Syntaxe validée</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Accès JIT — Élévation temporaire alice.bastion</h4>
+
+    <div class="info-grid three">
+      <div class="info-card red">
+        <div class="info-card-label">Avant ajout JIT</div>
+        <div class="info-card-title" style="color:var(--red);">sudo refusé</div>
+        <div class="info-card-body"><code style="font-family:var(--code);font-size:11px;">sudo -l</code><br>Sorry, user alice.bastion may not run sudo</div>
+      </div>
+      <div class="info-card green">
+        <div class="info-card-label">Pendant JIT</div>
+        <div class="info-card-title" style="color:var(--green);">sudo autorisé</div>
+        <div class="info-card-body"><code style="font-family:var(--code);font-size:11px;">sudo usermod -aG pam-admins alice.bastion</code><br>User may run: (ALL) ALL</div>
+      </div>
+      <div class="info-card red">
+        <div class="info-card-label">Après retrait JIT</div>
+        <div class="info-card-title" style="color:var(--red);">sudo refusé</div>
+        <div class="info-card-body"><code style="font-family:var(--code);font-size:11px;">sudo gpasswd -d alice.bastion pam-admins</code><br>Retrait confirmé — privilèges révoqués</div>
+      </div>
+    </div>
+
+    <!-- IMAGE 36 : sudo -l avant JIT refusé, pendant JIT (ALL) ALL, après JIT refusé -->
+    <div class="img-slot">
+      <div class="img-num">IMG_36</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <div class="img-label">Capture JIT — sudo -l avant (refusé) / pendant (ALL) / après (refusé)<br>usermod + gpasswd -d alice.bastion pam-admins</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Traçabilité — Logs SSH, sudo et auditd</h4>
+
+    <div class="code-block">
+      <div class="code-label">BASTION — Extraction des journaux</div>
+      <pre><span class="comment"># Journaux SSH</span>
+<span class="cmd">sudo grep sshd /var/log/auth.log | tail -n 20</span>
+<span class="comment"># Journaux sudo</span>
+<span class="cmd">sudo grep sudo /var/log/auth.log | tail -n 20</span>
+<span class="comment"># Règle auditd sur sudo</span>
+<span class="cmd">sudo auditctl -w /usr/bin/sudo -p x -k sudo-commands</span>
+<span class="cmd">sudo ausearch -k sudo-commands</span></pre>
+    </div>
+
+    <!-- IMAGE 37 : Logs auth.log SSH + sudo -->
+    <div class="img-slot">
+      <div class="img-num">IMG_37</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      <div class="img-label">Logs SSH — /var/log/auth.log<br>Sessions SSH + sudo tracés — pam_unix, sshd, sudo</div>
+    </div>
+
+    <!-- IMAGE 38 : auditctl + ausearch sudo-commands -->
+    <div class="img-slot">
+      <div class="img-num">IMG_38</div>
+      <div class="img-corner tl"></div><div class="img-corner tr"></div>
+      <div class="img-corner bl"></div><div class="img-corner br"></div>
+      <svg class="img-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+      </svg>
+      <div class="img-label">auditctl -w /usr/bin/sudo + ausearch -k sudo-commands<br>Règles auditd chargées — Événements sudo tracés</div>
+    </div>
+
+    <div class="divider"></div>
+    <h4 style="font-family:var(--head);color:var(--gold);letter-spacing:2px;font-size:14px;text-transform:uppercase;margin-bottom:20px;">Questions de consolidation</h4>
+
+    <div class="answer-block">
+      <div class="answer-q">Pourquoi un bastion réduit-il drastiquement la surface d'attaque ?</div>
+      <div class="answer-a">Un bastion réduit drastiquement la surface d'attaque car il centralise et contrôle tous les accès vers les ressources sensibles du système d'information. Au lieu d'exposer directement chaque serveur aux connexions externes, le bastion devient le <strong style="color:var(--accent3);">point d'entrée unique</strong> : seuls les utilisateurs autorisés peuvent s'y connecter, et toutes les actions sont filtrées, journalisées et encadrées. Chaque serveur cible (DC1, APP1) n'accepte des connexions SSH/RDP que depuis l'IP du bastion — toute tentative directe est rejetée par le pare-feu (ufw). La surface exposée passe de N serveurs accessibles à 1 seul point de contrôle renforcé.
+      </div>
+    </div>
+
+    <div class="answer-block">
+      <div class="answer-q">Quels risques subsistent sans JIT même avec un bastion ?</div>
+      <div class="answer-a">Sans JIT, les comptes administrateurs conservent des <strong style="color:var(--accent3);">privilèges permanents</strong>, ce qui augmente la surface d'attaque en cas de compromission. Un compte admin avec droits permanents, volé ou compromis, donne immédiatement accès à toutes les ressources administrables sans délai ni autorisation supplémentaire. Sans JIT, la traçabilité est également affaiblie : il devient impossible de vérifier si l'usage des droits élevés était justifié à un moment précis. L'absence d'élévation temporaire augmente aussi le risque d'erreur humaine avec des conséquences graves sur des systèmes critiques.
+      </div>
+    </div>
+
+    <div class="answer-block">
+      <div class="answer-q">Pourquoi la traçabilité est-elle aussi importante que le contrôle d'accès ?</div>
+      <div class="answer-a">Le contrôle d'accès détermine <em>qui peut entrer</em> dans le système, mais ne garantit pas la sécurité une fois l'accès accordé. La traçabilité enregistre <em>ce que fait l'utilisateur</em> une fois connecté — commandes exécutées, ressources consultées, modifications apportées. Elle permet d'identifier l'origine d'un incident, de détecter un comportement anormal ou un abus de privilèges, et de produire des preuves exploitables en cas d'audit ou d'incident judiciaire. Sans traçabilité, un utilisateur malveillant ou une erreur humaine grave passent inaperçus. Le contrôle d'accès limite l'entrée, la traçabilité assure la visibilité et la responsabilité — ensemble ils garantissent une sécurité complète.
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ─── TP6 : CAS PRATIQUE INTÉGRAL ─── -->
+<section class="section" style="border-bottom:none;">
+<div class="container">
+
+  <div class="section-header">
+    <span class="section-num">TP6</span>
+    <h2 class="section-title">Cas Pratique ERIS — <span class="accent">IAM de Bout en Bout</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tp-block">
+    <div class="tp-header">
+      <span class="tp-tag" style="background:var(--accent);">ERIS-CORP</span>
+      <h3 class="tp-title">Architecture IAM complète et cohérente</h3>
+    </div>
+
+    <p class="prose">
+      ERIS-CORP dispose d'un SI hybride. Les identités sont gérées dans <strong>Active Directory</strong>.
+      L'accès aux applications se fait via <strong>SSO centralisé</strong> avec authentification forte MFA.
+      Les droits sont gouvernés (IGA) et les accès à privilèges sont contrôlés via le <strong>bastion PAM</strong>.
+      Ce TP6 articule l'ensemble des composants déployés dans un scénario réel bout-en-bout.
+    </p>
+
+    <table class="ip-table">
+      <thead>
+        <tr><th>VM</th><th>OS</th><th>IP</th><th>Rôle</th><th>Fonctions IAM</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="mono">DC1/DC2</td><td>Windows Server 2022</td><td class="mono">10.20.0.10/.11</td><td class="role">Annuaire</td><td>Identités, groupes, Kerberos, DNS</td></tr>
+        <tr><td class="mono">IDP1</td><td>Ubuntu 22.04</td><td class="mono">10.20.0.50</td><td class="role">IdP</td><td>SSO, MFA, fédération</td></tr>
+        <tr><td class="mono">APP1</td><td>Ubuntu 22.04</td><td class="mono">10.20.0.40</td><td class="role">SP OIDC</td><td>Accès métier</td></tr>
+        <tr><td class="mono">APP2</td><td>Ubuntu 22.04</td><td class="mono">10.20.0.41</td><td class="role">SP SAML</td><td>Accès finance</td></tr>
+        <tr><td class="mono">BASTION</td><td>Ubuntu 22.04</td><td class="mono">10.20.0.30</td><td class="role">PAM</td><td>Accès admin JIT</td></tr>
+        <tr><td class="mono">W11-01</td><td>Windows 11</td><td class="mono">10.20.0.21</td><td class="role">Client</td><td>Tests utilisateurs</td></tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+
+    <div class="info-grid two" style="gap:16px;">
+
+      <div style="display:contents;">
+        <div class="info-card green">
+          <div class="info-card-label">Parcours 1 - Joiner</div>
+          <div class="info-card-title">david.kone - Arrivée</div>
+          <div class="info-card-body">Création compte AD, affectation GRP_All_Users, connexion APP1 via SSO + MFA — 3 captures prévues</div>
+        </div>
+
+        <div class="info-card gold">
+          <div class="info-card-label">Parcours 2 — Mover</div>
+          <div class="info-card-title">david.kone → IT Support N1</div>
+          <div class="info-card-body">Changement de rôle, retrait anciens groupes, vérification nouveaux accès — 3 captures prévues</div>
+        </div>
+
+        <div class="info-card red">
+          <div class="info-card-label">Parcours 3 — Leaver</div>
+          <div class="info-card-title">david.kone — Départ</div>
+          <div class="info-card-body">Désactivation compte, vérification impossibilité connexion, conservation traces — 3 captures prévues</div>
+        </div>
+
+        <div class="info-card warn">
+          <div class="info-card-label">Parcours 4 — Admin PAM</div>
+          <div class="info-card-title">Accès via Bastion + JIT</div>
+          <div class="info-card-body">Connexion admin nominatif au bastion, élévation JIT temporaire, action sur APP1/DC1, retrait privilèges — 2 captures prévues</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="info-card" style="margin-bottom:0;background:rgba(0,200,255,0.04);">
+      <div class="info-card-label">Livrables finaux ERIS</div>
+      <div class="info-card-body" style="line-height:2.2;">
+        <span class="badge ok">✔</span> Schéma d'architecture IAM global commenté<br>
+        <span class="badge ok">✔</span> Matrice rôles ↔ groupes ↔ applications<br>
+        <span class="badge ok">✔</span> Exports Keycloak (clients OIDC + SAML)<br>
+        <span class="badge ok">✔</span> Extraits de logs (Keycloak, SSH, sudo, auditd)<br>
+        <span class="badge ok">✔</span> Compte rendu de recertification et SoD<br>
+        <span class="badge info">◈</span> Captures écran parcours JML + incidents simulés
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-logo">ERIS-CORP</div>
+    <p class="footer-sub">Module ERIS - Gestion des Identités et des Accès · IMIE Paris / Groupe 3iL · Formateur Paul ZOKOU</p>
+    <p style="font-size:10px;color:var(--text3);margin-top:12px;letter-spacing:1px;">Ranguebaye NANTARA · Mastère Expert Réseaux, Infrastructures &amp; Sécurité</p>
+  </div>
 </footer>
 
-<script src="../assets/js/main.js"></script>
 </body>
 </html>
